@@ -28,27 +28,29 @@ UserProfile.findOne({displayName: requestedDisplayName})
     .catch(err => next(err))
 })
 
-authRouter.route("/signin")
+authRouter.route("/login")
 .post((req, res, next) => {
-    const uniformDisplayName = req.body.displayName
-    uniformDisplayName.toLowerCase()
-    UserProfile.findOne({displayName: uniformDisplayName})
+
+    UserProfile.findOne({displayName: req.body.displayName.toLowerCase()})
         .then(userProfile => {
             if(!userProfile){
                 res.status(403)
+                console.log("not found")
                 return next(new Error("User Name or Password do not match!"))
             }
             userProfile.checkPassword(req.body.password, (err, isMatch) => {
                 if(err){
+                    console.log(err);
                     res.status(403)
                     return next(new Error("User Name or Password do not match!"))
                 }
                 if(!isMatch){
+                    console.log('mismatch');
                     res.status(403)
                     return next(new Error("User Name or Password do not match!"))
                 }
                 const token = jwt.sign(userProfile.withoutPassword(), process.env.SECRET)
-                    res.status(200).send({token, user: userProfile.withoutPassword()})
+                    res.status(200).send({token, profile: userProfile.withoutPassword()})
             })
         })
         .catch(err => next(err))
