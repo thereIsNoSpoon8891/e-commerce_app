@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const bcrypt = require('bcrypt')
 
 const itemSchema = new Schema({
     itemName: {
@@ -80,5 +81,26 @@ const userProfileSchema = new Schema({
         }
     }
 })
+
+// method to check encrpted password on login
+userProfileSchema.methods.checkPassword = function (passwordAttempt, callback){
+    bcrypt.compare(passwordAttempt, this.password, (err, isMatch) => {
+        if(err) return callback(err)
+        return callback(null, isMatch)
+    })
+}
+// method to remove user's pssword for token/sending the response
+userProfileSchema.methods.withoutPassword = function (){
+    const user = this.toObject()
+        delete user.password
+            return user
+
+}
+/////////////////////////password reset///////////////
+// function to send token for password reset
+userProfileSchema.methods.createPasswordResetToken = function () {
+    const resetToken = jwt.sign({id: this._id}, process.env.SECRET, {expiresIn: '10m'})
+    return resetToken
+}
 
 module.exports = mongoose.model('UserProfile', userProfileSchema)
