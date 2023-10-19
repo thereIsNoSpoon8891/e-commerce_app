@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING)
 
 app.use("/api/auth", require('./routes/authRouter'))
 app.use("/api/auth", expressjwt({secret: process.env.SECRET, algorithms:['HS256'] }))
-
+app.use("/api/auth/items", require('./routes/itemsRouter'))
 
 // error handling
 app.use((err, req, res, next) => {

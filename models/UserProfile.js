@@ -3,6 +3,21 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+const messageSchema = new Schema({
+    to: {
+        type: String,
+        required: true
+    },
+    from: {
+        type: String,
+        required: true
+    },
+    body: {
+        type: String,
+        required: true
+    }
+})
+
 const itemSchema = new Schema({
     itemName: {
         type: String,
@@ -14,7 +29,6 @@ const itemSchema = new Schema({
     },
     imageUrl: {
         type: String,
-        required: true
     },
     price: {
         type: Number,
@@ -28,7 +42,11 @@ const itemSchema = new Schema({
     available: {
         type: Boolean,
         default: true,
-    }
+    },
+    messages: [messageSchema],
+},
+{
+    timestamps: true
 })
 
 const userProfileSchema = new Schema({
@@ -73,7 +91,11 @@ const userProfileSchema = new Schema({
     itemsPurchased: {
         type: [itemSchema]
     },
-    shoppingCart: [String],
+    itemsSearchingFor: {
+        type: [itemSchema]
+    },
+    receivedDirectMessages: [messageSchema],
+    sentDirectMessages: [messageSchema],
     reputation: {
         type: Number,
         enum: {
@@ -115,4 +137,12 @@ userProfileSchema.methods.createPasswordResetToken = function () {
     return resetToken
 }
 
-module.exports = mongoose.model('UserProfile', userProfileSchema)
+const userProfle = mongoose.model('UserProfile', userProfileSchema)
+const message = mongoose.model('Message', messageSchema)
+const item = mongoose.model('Item', itemSchema)
+
+module.exports = {
+    userProfile: userProfle,
+    message: message,
+    item: item
+}

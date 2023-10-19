@@ -1,18 +1,18 @@
 const express = require('express')
 const authRouter = express.Router()
 const jwt = require('jsonwebtoken')
-const UserProfile = require('../models/UserProfile')
+const { userProfile } = require('../models/userProfile')
 
 authRouter.route("/signup")
 .post((req, res, next) => {
     const requestedDisplayName = req.body.displayName
 
 
-UserProfile.findOne({displayName: requestedDisplayName})
+userProfile.findOne({displayName: requestedDisplayName})
     .then(user => {
             if(user){
                 res.status(403)
-                return next(new Error(`Sorry ${requestedDisplayName}, is not available OR This email is already in use.`))
+                return next(new Error(`Sorry "${requestedDisplayName}", is not available OR This email is already in use.`))
             } 
             if (!user) {
                 req.body.displayName.toLowerCase()
@@ -31,7 +31,7 @@ UserProfile.findOne({displayName: requestedDisplayName})
 authRouter.route("/login")
 .post((req, res, next) => {
 
-    UserProfile.findOne({displayName: req.body.displayName.toLowerCase()})
+    userProfile.findOne({displayName: req.body.displayName.toLowerCase()})
         .then(userProfile => {
             if(!userProfile){
                 res.status(403)
