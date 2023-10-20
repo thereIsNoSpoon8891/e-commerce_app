@@ -8,14 +8,27 @@ const messageSchema = new Schema({
         type: String,
         required: true
     },
+    receiverId: {
+        type: Schema.Types.ObjectId,
+        ref: "UserProfile",
+        required: true
+    },
     from: {
         type: String,
+        required: true
+    },
+    senderId: {
+        type: Schema.Types.ObjectId,
+        ref: "UserProfile",
         required: true
     },
     body: {
         type: String,
         required: true
-    }
+    },
+},
+{
+    timestamps: true
 })
 
 const itemSchema = new Schema({
@@ -94,13 +107,14 @@ const userProfileSchema = new Schema({
     itemsSearchingFor: {
         type: [itemSchema]
     },
-    receivedDirectMessages: [messageSchema],
-    sentDirectMessages: [messageSchema],
+    mailBox: {
+        inbox: [messageSchema],
+        outBox: [messageSchema]
+    },
     reputation: {
-        type: Number,
+        type: [Number],
         enum: {
-            values: [1, 2, 3, 4, 5],
-            message: '{VALUE} is not supported'
+            values: [1, 2, 3, 4, 5]
         }
     }
 })

@@ -16,7 +16,7 @@ userProfile.findOne({displayName: requestedDisplayName})
             } 
             if (!user) {
                 req.body.displayName.toLowerCase()
-                const newUserProfile = new UserProfile(req.body)
+                const newUserProfile = new userProfile(req.body)
                 newUserProfile.save()
                     .then(userProfile => {
                         const token = jwt.sign(userProfile.withoutPassword(), process.env.SECRET)
