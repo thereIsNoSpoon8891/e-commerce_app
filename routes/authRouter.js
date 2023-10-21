@@ -5,8 +5,10 @@ const { userProfile } = require('../models/userProfile')
 
 authRouter.route("/signup")
 .post((req, res, next) => {
-    const requestedDisplayName = req.body.displayName
 
+const requestedDisplayName = req.body.displayName
+
+requestedDisplayName.toLowerCase()
 
 userProfile.findOne({displayName: requestedDisplayName})
     .then(user => {

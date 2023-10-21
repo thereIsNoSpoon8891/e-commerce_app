@@ -15,6 +15,7 @@ publicRouter.route("/items-for-sale")
 
 publicRouter.route("/items-searching-for")
 .get((req, res, next) => {
+    
     userProfile.find({}, 'itemsSearchingFor -_id')
         .then(docsArray => {
             const flattenedDocs = docsArray.map(doc => doc.itemsSearchingFor).flat()
