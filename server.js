@@ -17,7 +17,7 @@ app.use("/api/auth", require('./routes/authRouter'))
 app.use("/api/auth", expressjwt({secret: process.env.SECRET, algorithms:['HS256'] }))
 app.use("/api/auth/items", require('./routes/itemsRouter'))
 app.use("/api/auth/review", require('./routes/reviewRouter'))
-
+app.use("/api/auth/message", require('./routes/messageRouter'))
 // error handling
 app.use((err, req, res, next) => {
     console.log(err)

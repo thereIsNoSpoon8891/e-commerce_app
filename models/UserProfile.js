@@ -56,7 +56,6 @@ const itemSchema = new Schema({
         type: Boolean,
         default: true,
     },
-    messages: [messageSchema],
 },
 {
     timestamps: true
@@ -109,7 +108,7 @@ const userProfileSchema = new Schema({
     },
     mailBox: {
         inbox: [messageSchema],
-        outBox: [messageSchema]
+        outbox: [messageSchema]
     },
     reputation: {
         type: [Number],

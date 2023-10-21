@@ -20,6 +20,7 @@ itemsRouter.route("/add-item-for-sale")
 
 itemsRouter.route("/add-item-searching-for")
 .post((req, res, next) => {
+
     req.body.itemOwner = req.auth._id
 
         const newItem = new item(req.body)
@@ -34,6 +35,7 @@ itemsRouter.route("/add-item-searching-for")
 
 itemsRouter.route("/add-items-purchased")
 .post((req, res, next) => {
+
     req.body.itemOwner = req.auth._id
 
     const newItem = new item(req.body)
@@ -49,7 +51,7 @@ itemsRouter.route("/add-items-purchased")
 itemsRouter.route("/delete-item-searching-for/:itemId")
 .delete((req, res, next) => {
 
-    userProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsSearchingFor: {_id: req.params.itemId}}}), {new: true}
+    userProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsSearchingFor: {_id: req.params.itemId}}}, {new: true})
         .then(profile => res.status(201).send(profile))
         .catch(err => next(err))
 
