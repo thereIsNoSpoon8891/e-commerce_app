@@ -1,0 +1,83 @@
+
+body{
+    font-family: sans-serif;
+    margin: 0;
+}
+
+.auth--page {
+    text-align: center;
+}
+
+.auth--sign-in-form{
+    width: 50vw;
+    height: 500px;
+    background-color: rgb(173, 173, 173);
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.auth--sign-in-form button {
+    width: 50%;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+}
+
+.auth--sign-in-form input{
+    width: 50%;
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.auth--login-form{
+    width: 50vw;
+    height: 300px;
+    background-color: rgb(173, 173, 173);
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.auth--login-form button {
+    width: 50%;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+}
+
+.auth--login-form input{
+    width: 50%;
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.form--toggles{
+    width: 50vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+.form--toggles h2{
+    width: 50%;
+}
+
+.highlight-login{
+    color: aliceblue;
+    border-bottom: solid black 2px;
+}
+
+.highlight-signin{
+    color: aliceblue;
+    border-bottom: solid black 2px;
+}

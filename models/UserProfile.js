@@ -81,11 +81,6 @@ const userProfileSchema = new Schema({
         required: true,
         lowercase: true
     },
-    mailingAddress: {
-        type: String,
-        required: true,
-        lowercase: true
-    },
     email: {
         type: String,
         required: true,

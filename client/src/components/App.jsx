@@ -1,4 +1,4 @@
-
+import AuthForm from "./AuthForm"
 
 
 
@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      test
+      <AuthForm />
     </>
   )
 }
