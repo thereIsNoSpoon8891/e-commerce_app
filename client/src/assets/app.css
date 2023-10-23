@@ -8,8 +8,8 @@ body{
     text-align: center;
 }
 
-.auth--sign-in-form{
-    width: 50vw;
+.auth--sign-up-form{
+    width: 80vw;
     height: 500px;
     background-color: rgb(173, 173, 173);
     display: flex;
@@ -20,14 +20,14 @@ body{
     border-radius: 10px;
 }
 
-.auth--sign-in-form button {
-    width: 50%;
-    height: 30px;
+.auth--sign-up-form button {
+    width: 15vw;
+    height: 7vh;
     border-radius: 5px;
     border: none;
 }
 
-.auth--sign-in-form input{
+.auth--sign-up-form input{
     width: 50%;
     height: 30px;
     margin-bottom: 10px;
@@ -36,8 +36,8 @@ body{
 }
 
 .auth--login-form{
-    width: 50vw;
-    height: 300px;
+    width: 80vw;
+    height: 500px;
     background-color: rgb(173, 173, 173);
     display: flex;
     flex-direction: column;
@@ -48,14 +48,14 @@ body{
 }
 
 .auth--login-form button {
-    width: 50%;
-    height: 30px;
+    width: 15vw;
+    height: 7vh;
     border-radius: 5px;
     border: none;
 }
 
 .auth--login-form input{
-    width: 50%;
+    width: 25vw;
     height: 30px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -63,9 +63,10 @@ body{
 }
 
 .form--toggles{
-    width: 50vw;
+    width: 100%;
     display: flex;
     justify-content: space-around;
+    align-items: flex-end;
 }
 
 .form--toggles h2{
@@ -80,4 +81,31 @@ body{
 .highlight-signin{
     color: aliceblue;
     border-bottom: solid black 2px;
+}
+
+.menu--container{
+    margin: auto;
+    width: 400px;
+    height: 400px;
+    background-color: aquamarine;
+}
+
+.header--container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgb(102, 199, 129);
+    height: 100px;
+}
+
+.header--container h4{
+    margin: auto;
+}
+
+.header--container h6{
+    margin: 5px;
+}
+
+.header--container button{
+    margin: 5px;
 }

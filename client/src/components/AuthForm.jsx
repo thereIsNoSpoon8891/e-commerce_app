@@ -125,7 +125,7 @@ return (
 
         :
 
-    <form onSubmit={handleSignUp} className="auth--sign-in-form">
+    <form onSubmit={handleSignUp} className="auth--sign-up-form">
         <div className="form--toggles">
             <h2 onClick={navToLogin} >Login</h2>
             <h2 onClick={navToSignup} className="highlight-signin">Create Account</h2>

@@ -7,12 +7,14 @@ function DataContextProvider (props) {
 
     const { children } = props;
 
-    const pofileProps = {
+    const profileProps = {
         profile: JSON.parse(localStorage.getItem("profile")) || {},
         token: localStorage.getItem("token") || ""
 }
 
-    const [profileData, setProfileData] = useState(pofileProps);
+    const [profileData, setProfileData] = useState(profileProps);
+
+    const { profile, token } = profileData;
 
     function signup (credentials) {
         axios.post("/api/auth/signup", credentials)
@@ -36,11 +38,20 @@ function DataContextProvider (props) {
             .catch(err => console.log(err))
     }
 
+    function logout () {
+        localStorage.removeItem("token");
+        localStorage.removeItem("profile");
+        setProfileData(profileProps)
+    }
+
 return (
 <DataContext.Provider
 value={{
     signup,
-    login
+    login,
+    logout,
+    profile,
+    token
 }}>
     {children}
 </DataContext.Provider>
