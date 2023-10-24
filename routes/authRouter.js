@@ -1,7 +1,7 @@
 const express = require('express')
 const authRouter = express.Router()
 const jwt = require('jsonwebtoken')
-const { userProfile } = require('../models/userProfile')
+const { UserProfile } = require('../models/UserProfile')
 
 authRouter.route("/signup")
 .post((req, res, next) => {
@@ -10,7 +10,7 @@ const requestedDisplayName = req.body.displayName
 
 requestedDisplayName.toLowerCase()
 
-userProfile.findOne({displayName: requestedDisplayName})
+UserProfile.findOne({displayName: requestedDisplayName})
     .then(user => {
             if(user){
                 res.status(403)
@@ -18,7 +18,7 @@ userProfile.findOne({displayName: requestedDisplayName})
             } 
             if (!user) {
                 req.body.displayName.toLowerCase()
-                const newUserProfile = new userProfile(req.body)
+                const newUserProfile = new UserProfile(req.body)
                 newUserProfile.save()
                     .then(userProfile => {
                         const token = jwt.sign(userProfile.withoutPassword(), process.env.SECRET)
@@ -33,7 +33,7 @@ userProfile.findOne({displayName: requestedDisplayName})
 authRouter.route("/login")
 .post((req, res, next) => {
 
-    userProfile.findOne({displayName: req.body.displayName.toLowerCase()})
+    UserProfile.findOne({displayName: req.body.displayName.toLowerCase()})
         .then(userProfile => {
             if(!userProfile){
                 res.status(403)
@@ -57,11 +57,6 @@ authRouter.route("/login")
         })
         .catch(err => next(err))
 })
-
-
-
-
-
 
 
 module.exports = authRouter

@@ -47,9 +47,13 @@ const itemSchema = new Schema({
         type: Number,
         required: true
     },
-    itemOwner: {
+    itemOwner_id: {
         type: Schema.Types.ObjectId,
         ref: "UserProfile",
+        required: true
+    },
+    itemOwnerName: {
+        type: String,
         required: true
     },
     available: {
@@ -141,12 +145,12 @@ userProfileSchema.methods.createPasswordResetToken = function () {
     return resetToken
 }
 
-const userProfle = mongoose.model('UserProfile', userProfileSchema)
-const message = mongoose.model('Message', messageSchema)
-const item = mongoose.model('Item', itemSchema)
+const UserProfle = mongoose.model('UserProfile', userProfileSchema)
+const Message = mongoose.model('Message', messageSchema)
+const Item = mongoose.model('Item', itemSchema)
 
 module.exports = {
-    userProfile: userProfle,
-    message: message,
-    item: item
+    UserProfle,
+    Message,
+    Item
 }
