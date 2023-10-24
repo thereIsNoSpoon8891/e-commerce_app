@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { DataContext } from '../context/DataProvider'
+import { ProfileContext } from '../context/ProfileProvider'
 
 const AuthForm = () => {
 
@@ -33,7 +33,7 @@ const AuthForm = () => {
 
     const [highLight, setHighLight] = useState("login")
 
-    const { signup, login } = useContext(DataContext);
+    const { signup, login } = useContext(ProfileContext);
 
     function signUpHandleChange (e) {
         const { name, value } = e.target

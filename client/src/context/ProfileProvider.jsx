@@ -1,11 +1,11 @@
 import { createContext, useState } from 'react'
 import axios from 'axios';
 
-const DataContext = createContext();
+const ProfileContext = createContext();
 
-function DataContextProvider (props) {
+function ProfileContextProvider ({children}) {
 
-    const { children } = props;
+
 
     const profileProps = {
         profile: JSON.parse(localStorage.getItem("profile")) || {},
@@ -41,11 +41,11 @@ function DataContextProvider (props) {
     function logout () {
         localStorage.removeItem("token");
         localStorage.removeItem("profile");
-        setProfileData(profileProps)
+        setProfileData(profileProps);
     }
 
 return (
-<DataContext.Provider
+<ProfileContext.Provider
 value={{
     signup,
     login,
@@ -54,8 +54,8 @@ value={{
     token
 }}>
     {children}
-</DataContext.Provider>
+</ProfileContext.Provider>
 )
 }
  
-export { DataContextProvider, DataContext }
+export { ProfileContextProvider, ProfileContext }

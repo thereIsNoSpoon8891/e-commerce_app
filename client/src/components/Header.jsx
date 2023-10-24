@@ -1,20 +1,20 @@
 import { useState, useContext } from 'react'
-import { DataContext } from '../context/DataProvider';
+import { ProfileContext } from '../context/ProfileProvider';
 
 
 const Header = () => {
  
     const [toggleMenu, setToggleMenu] = useState(false);
 
-    const { profile, logout } = useContext(DataContext)
+    const { profile, logout } = useContext(ProfileContext);
 
 
 
 return (
 <div className='header--container'>
-    <h4>
+    <h1>
         App Name
-    </h4>
+    </h1>
 
     <h6>
        Signed in as: {profile.displayName}
