@@ -8,6 +8,10 @@ itemsRouter.route("/add-item-for-sale")
 
     req.body.itemOwner_id = req.auth._id
 
+    UserProfile.findOne(req.auth._id)
+        .then(profile => profile.displayName = req.body.itemOwnerName)
+        .catch(err => next(err))
+
         const newItem = new Item(req.body)
             newItem.save()
                 .then(item => {
@@ -23,6 +27,10 @@ itemsRouter.route("/add-item-searching-for")
 
     req.body.itemOwner_id = req.auth._id
 
+    UserProfile.findOne(req.auth._id)
+    .then(profile => profile.displayName = req.body.itemOwnerName)
+    .catch(err => next(err))
+
         const newItem = new Item(req.body)
             newItem.save()
                 .then(item => {
@@ -35,7 +43,9 @@ itemsRouter.route("/add-item-searching-for")
 
 itemsRouter.route("/add-items-purchased")
 .post((req, res, next) => {
-
+    // this needs to change, a purchased item should already have a itemOwner_id and itemOwnerName
+    // could leave line 48, this will imply that this user is the NEW owner, 
+    //the itemOwnerName will still be the original name
     req.body.itemOwner_id = req.auth._id
 
     const newItem = new Item(req.body)
