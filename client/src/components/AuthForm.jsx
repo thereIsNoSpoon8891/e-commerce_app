@@ -61,7 +61,7 @@ const AuthForm = () => {
                     setErrorMessage(prevError => ({...prevError, passwordError: "Passwords do NOT match!"}))
                 }
                 if(email !== checkEmail) {
-                    setErrorMessage(prevError => ({...prevError, emailError: "Emails do NOT matach!"}))
+                    setErrorMessage(prevError => ({...prevError, emailError: "Emails do NOT match!"}))
                 }
                 if(password === passwordCheck && email === checkEmail) {
                     console.log("sign up complete")
@@ -167,6 +167,7 @@ return (
         onChange={signUpHandleChange}
         autoComplete="true"
         />
+        {errorMessage.passwordError && <p>{errorMessage.passwordError}</p>}
 
         <input
         type="text"
@@ -211,6 +212,7 @@ return (
         onChange={signUpHandleChange}
         autoComplete="true"
         />
+        {errorMessage.emailError && <p>{errorMessage.emailError}</p>}
 
         <button>Sign up</button>
         <p></p>

@@ -12,15 +12,15 @@ function App() {
 
   return (
     <>
-  <Router>
-        {token && <Header />}
-    <Routes>
-        <Route path="/" element={token ? <Home /> : <AuthForm /> } />
+      {token && <Header />}
+          <Router>
+              <Routes>
+                  <Route path="/" element={token ? <Home /> : <AuthForm /> } />
 
-        <Route  path="/home" element={ <ProtectedRoutes> <Home /> </ProtectedRoutes>}/>
+                  <Route  path="/home" element={ <ProtectedRoutes>   <Home />  </ProtectedRoutes> }/>
 
-    </Routes>
-  </Router>
+              </Routes>
+          </Router>
       </>
 
   )

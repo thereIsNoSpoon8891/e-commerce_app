@@ -6,11 +6,15 @@ const { UserProfile } = require('../models/UserProfile')
 authRouter.route("/signup")
 .post((req, res, next) => {
 
-const requestedDisplayName = req.body.displayName
+const requestedDisplayName = req.body.displayName;
 
-requestedDisplayName.toLowerCase()
+requestedDisplayName.toLowerCase();
 
-UserProfile.findOne({displayName: requestedDisplayName})
+const requestedEmail = req.body.email;
+
+requestedEmail.toLowerCase();
+
+UserProfile.findOne({ $or: [ {displayName: requestedDisplayName}, {email: requestedEmail} ] })
     .then(user => {
             if(user){
                 res.status(403)

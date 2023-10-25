@@ -9,7 +9,8 @@ function ProfileContextProvider ({children}) {
 
     const profileProps = {
         profile: JSON.parse(localStorage.getItem("profile")) || {},
-        token: localStorage.getItem("token") || ""
+        token: localStorage.getItem("token") || "",
+        errorMessage: ""
 }
 
     const [profileData, setProfileData] = useState(profileProps);
@@ -24,7 +25,7 @@ function ProfileContextProvider ({children}) {
                     localStorage.setItem("token", token)
                         setProfileData(prevData => ({...prevData, token, profile}))
             })
-            .catch(err => console.log(err))
+            .catch(err => handleError(err.response.data.errorMessage))
     }
  
     function login (credentials) {
@@ -35,13 +36,31 @@ function ProfileContextProvider ({children}) {
                     localStorage.setItem("token", token);
                         setProfileData(prevData => ({...prevData, token, profile}));
             })
-            .catch(err => console.log(err))
+            .catch(err => handleError(err.response.data.errorMessage))
     }
 
     function logout () {
         localStorage.removeItem("token");
         localStorage.removeItem("profile");
-        setProfileData(profileProps);
+        setProfileData({
+            profile: {},
+            token: "",
+            errorMessage: ""
+        });
+    }
+
+    function handleError (err) {
+        setProfileData(prevData => ({
+            ...prevData,
+            errorMessage: err
+        }))
+    }
+
+    function resetErrorMessage () {
+        setProfileData(prevData => ({
+            ...prevData,
+            errorMessage: ""
+        }))
     }
 
 return (
@@ -50,6 +69,7 @@ value={{
     signup,
     login,
     logout,
+    resetErrorMessage,
     profile,
     token
 }}>

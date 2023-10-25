@@ -145,12 +145,12 @@ userProfileSchema.methods.createPasswordResetToken = function () {
     return resetToken
 }
 
-const UserProfle = mongoose.model('UserProfile', userProfileSchema)
+const UserProfile = mongoose.model('UserProfile', userProfileSchema)
 const Message = mongoose.model('Message', messageSchema)
 const Item = mongoose.model('Item', itemSchema)
 
 module.exports = {
-    UserProfle,
+    UserProfile,
     Message,
     Item
 }
