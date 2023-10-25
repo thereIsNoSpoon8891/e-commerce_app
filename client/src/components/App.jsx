@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { ProfileContext } from '../context/ProfileProvider'
 import Home from './Home'
 import Header from './Header'
+import Footer from './Footer'
 import ProtectedRoutes from './ProtectedRoutes'
 
 function App() {
@@ -21,8 +22,8 @@ function App() {
 
               </Routes>
           </Router>
-      </>
-
+      {token && <Footer />}
+    </>
   )
 }
 

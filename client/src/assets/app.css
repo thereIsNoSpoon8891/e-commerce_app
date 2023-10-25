@@ -7,6 +7,11 @@ body{
 .auth--page {
     text-align: center;
 }
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
 
 .auth--sign-up-form{
     width: 80vw;
@@ -96,6 +101,7 @@ body{
     align-items: center;
     background-color: rgb(102, 199, 129);
     height: 100px;
+    width: 100%;
 }
 
 .header--container h1{
@@ -112,7 +118,7 @@ body{
 
 .home--wrapper{
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     background-color: aqua;
 }
 
@@ -149,4 +155,18 @@ body{
 .list--container{
     display: flex;
     flex-flow: row;
+}
+
+.footer--container{
+    width: 99vw;
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(197, 196, 196);
+    box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
+    -webkit-box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
+    -moz-box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
 }
