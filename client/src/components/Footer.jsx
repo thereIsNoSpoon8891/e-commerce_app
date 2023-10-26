@@ -27,7 +27,7 @@ return (
         </button>
     </Link>
 
-    <Link>
+    <Link to="/profile" >
         <button>
             my profile
         </button>

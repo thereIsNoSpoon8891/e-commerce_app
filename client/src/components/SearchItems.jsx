@@ -3,7 +3,7 @@
 
 const SearchItems = props => {
 
-    const { name, description, imageUrl, price, owner_id  } = props;
+    const { name, description, imageUrl, price, owner_id, owner_name  } = props;
 
  
 return (
@@ -22,6 +22,12 @@ return (
 <p>
     {price}
 </p>
+<p>
+    posted by: {owner_name}
+</p>
+<button>
+        message
+    </button>
 </div >
 )
 }

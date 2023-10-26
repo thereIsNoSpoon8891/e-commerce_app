@@ -6,6 +6,7 @@ import Home from './Home';
 import Header from './Header';
 import Footer from './Footer';
 import ItemForm from './ItemForm';
+import Profile from './Pofile'
 import ProtectedRoutes from './ProtectedRoutes';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
 
                   <Route path="/add-item" element={ <ProtectedRoutes>   <ItemForm />  </ProtectedRoutes> } />
 
+                  <Route path='/profile' element={ <ProtectedRoutes>  <Profile /> </ProtectedRoutes>} />
               </Routes>
       {token && <Footer />}
           </Router>
