@@ -8,12 +8,16 @@ const SearchItems = props => {
  
 return (
 <div className="list-items">
-<h6>
+<h1>
     {name}
-</h6>
-<h4>
-    {description}
-</h4>
+</h1>
+
+<div>
+    <p>
+        {description}
+    </p>
+</div>
+
 <img src={imageUrl} />
 <p>
     {price}

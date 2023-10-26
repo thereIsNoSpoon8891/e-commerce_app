@@ -1,19 +1,38 @@
-
+import { Link } from 'react-router-dom'
+import { useContext } from 'react';
+import { ProfileContext } from '../context/ProfileProvider';
 
 
 const Footer = () => {
+
+    // const { profile } = useContext(ProfileContext);
+    // const  { imageUrl }  = profile; // add imageUrl to model
+
+
+
  
 return (
 <div className="footer--container">
-    <div>
-        post item for sale
-    </div>
-    <div>
-        post something your searching for
-    </div>
-    <div>
-        my profile
-    </div>
+
+    <Link to="/add-item" >
+        <button>
+            post item 
+        </button>
+    </Link>
+
+
+    <Link>
+        <button>
+            Search
+        </button>
+    </Link>
+
+    <Link>
+        <button>
+            my profile
+        </button>
+    </Link>
+
 </div>
 )
 }

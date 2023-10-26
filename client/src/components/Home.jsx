@@ -1,8 +1,8 @@
-import { useState, useContext } from 'react'
-import { ProfileContext } from '../context/ProfileProvider'
-import { ItemContext } from '../context/ItemProvider'
-import SaleItems from './SaleItems'
-import SearchItems from './SearchItems'
+import { useState, useContext } from 'react';
+import { ProfileContext } from '../context/ProfileProvider';
+import { ItemContext } from '../context/ItemProvider';
+import SaleItems from './SaleItems';
+import SearchItems from './SearchItems';
 
 
 
@@ -33,6 +33,7 @@ const Home = () => {
                 imageUrl={item.imageUrl}
                 price={item.price}
                 owner_id={item.itemOwner}
+                owner_name={item.itemOwnerName}
                 key={item._id}
                  />)
     })

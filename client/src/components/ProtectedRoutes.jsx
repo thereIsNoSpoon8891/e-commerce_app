@@ -1,6 +1,6 @@
-import { useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ProfileContext } from '../context/ProfileProvider'
+import { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ProfileContext } from '../context/ProfileProvider';
 
 const ProtectedRoutes = ({children}) => {
 

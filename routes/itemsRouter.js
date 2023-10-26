@@ -8,11 +8,10 @@ itemsRouter.route("/add-item-for-sale")
 
     req.body.itemOwner_id = req.auth._id
 
-    UserProfile.findOne(req.auth._id)
-        .then(profile => profile.displayName = req.body.itemOwnerName)
-        .catch(err => next(err))
-
-        const newItem = new Item(req.body)
+    UserProfile.findOne({_id: req.auth._id})
+        .then(profile => {
+            req.body.itemOwnerName = profile.displayName
+            const newItem = new Item(req.body)
             newItem.save()
                 .then(item => {
                     UserProfile.findByIdAndUpdate({_id: req.auth._id}, {$push: {itemsForSale: item}},{new: true})
@@ -20,6 +19,9 @@ itemsRouter.route("/add-item-for-sale")
                         .catch(err => next(err))
                 })
                 .catch(err => next(err))
+        })
+        .catch(err => next(err))
+
 })
 
 itemsRouter.route("/add-item-searching-for")
@@ -27,18 +29,19 @@ itemsRouter.route("/add-item-searching-for")
 
     req.body.itemOwner_id = req.auth._id
 
-    UserProfile.findOne(req.auth._id)
-    .then(profile => profile.displayName = req.body.itemOwnerName)
-    .catch(err => next(err))
-
+    UserProfile.findOne({_id: req.auth._id})
+    .then(profile =>  {
+        req.body.itemOwnerName = profile.displayName
         const newItem = new Item(req.body)
-            newItem.save()
-                .then(item => {
-                    UserProfile.findByIdAndUpdate({_id: req.auth._id}, {$push: {itemsSearchingFor: item}},{new: true})
-                        .then(updatedProfile => res.status(201).send(updatedProfile.itemsSearchingFor))
-                        .catch(err => next(err))
-                })
-                .catch(err => next(err))
+        newItem.save()
+            .then(item => {
+                UserProfile.findByIdAndUpdate({_id: req.auth._id}, {$push: {itemsSearchingFor: item}},{new: true})
+                    .then(updatedProfile => res.status(201).send(updatedProfile.itemsSearchingFor))
+                    .catch(err => next(err))
+            })
+            .catch(err => next(err))
+    })
+    .catch(err => next(err))
 })
 
 itemsRouter.route("/add-items-purchased")

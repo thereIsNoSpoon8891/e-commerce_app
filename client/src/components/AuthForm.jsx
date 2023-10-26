@@ -1,5 +1,5 @@
-import { useState, useContext } from "react"
-import { ProfileContext } from '../context/ProfileProvider'
+import { useState, useContext } from "react";
+import { ProfileContext } from '../context/ProfileProvider';
 
 const AuthForm = () => {
 

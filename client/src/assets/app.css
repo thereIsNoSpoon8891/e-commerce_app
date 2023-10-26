@@ -11,6 +11,10 @@ html, body{
     height: 100%;
     margin: 0;
 }
+textarea{
+    resize: none;
+    border-radius: 10px;
+}
 
 
 .auth--sign-up-form{
@@ -92,20 +96,21 @@ html, body{
     margin: auto;
     width: 400px;
     height: 400px;
-    background-color: aquamarine;
+    background-color: rgb(57, 206, 156);
 }
 
 .header--container{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: rgb(102, 199, 129);
+    background-color: rgb(177, 174, 174);
     height: 100px;
     width: 100%;
 }
 
-.header--container h1{
+.header--container a{
     margin: auto;
+    text-decoration: none;
 }
 
 .header--container h6{
@@ -119,7 +124,7 @@ html, body{
 .home--wrapper{
     height: 100vh;
     width: 100%;
-    background-color: aqua;
+    background-color: rgb(216, 232, 232);
 }
 
 .selection--wrapper{
@@ -146,15 +151,17 @@ html, body{
     flex-direction: column;
     border: solid black 2px;
     border-radius: 10px;
-    width: 40%;
+    width: 300px;
     height: 300px;
-    margin:5%;
+    margin:1%;
     background: rgb(195, 195, 195);
+    align-items: center;
 }
 
 .list--container{
     display: flex;
-    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .footer--container{
@@ -163,10 +170,94 @@ html, body{
     bottom: 0;
     height: 50px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    background-color: rgb(197, 196, 196);
+
+
+}
+
+.footer--container button{
+    width: 90%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    margin: 2px;
     box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
     -webkit-box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
     -moz-box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
 }
+
+.footer--container a {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    margin: 2px;
+
+}
+.footer--container a > button{
+    box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
+    -webkit-box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
+    -moz-box-shadow: 1px -11px 5px 0px rgba(120,115,115,0.75);
+}
+.footer--container button:hover{
+    background-color: rgba(120,115,115,0.75);
+    color: aliceblue;
+}
+
+
+.item-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 400px;
+    border-radius: 10px;
+}
+
+.item-form > input{
+    width: 300px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button{
+    display: none;
+}
+
+
+.item-form textarea{
+    width: 300px;
+    height: 100px;
+    resize: none;
+}
+fieldset{
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-modal{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    background-color: gray;
+    border-radius: 10px;
+    border: solid white 1px;
+    box-shadow: -7px 7px 27px 20px rgba(120,115,115,0.75);
+    -webkit-box-shadow: -7px 7px 27px 20px rgba(120,115,115,0.75);
+    -moz-box-shadow: -7px 7px 27px 20px rgba(120,115,115,0.75);
+}
+
+.post-modal button{
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+}
+
