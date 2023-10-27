@@ -8,10 +8,15 @@ const SearchItems = props => {
 
     const { profile: {displayName} } = useContext(ProfileContext);
 
-    const [toggleMessageForm, setToggleMessageForm] = useState(true);
+    const [toggleMessageForm, setToggleMessageForm] = useState(false);
+
+    function handleModal () {
+        setToggleMessageForm(prev => !prev);
+    } 
 
  // thnink thru the messaging sending process, what properties do I need? where to put them?
 return (
+    <>
 <div className="list-items">
 <h1>
     {name}
@@ -30,10 +35,21 @@ return (
 <p>
     posted by: {owner_name}
 </p>
-    <button>
+    <button
+    onClick={handleModal}
+    >
         Message {owner_name}
     </button>
 </div >
+{toggleMessageForm && 
+    <MessageForm 
+    name={name} 
+    owner_id={owner_id} 
+    owner_name={owner_name} 
+    displayName={displayName}
+    handleModal={handleModal}
+    />}
+    </>
 )
 }
  

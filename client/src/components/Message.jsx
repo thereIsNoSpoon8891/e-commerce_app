@@ -1,10 +1,21 @@
-
+import { useContext } from 'react';
+import { MessageContext } from '../context/MessageProvider';
 
 
 const Message = props => {
 
-    const { to, receiverId, from, senderId, body } = props;
- 
+    const { to, receiverId, from, senderId, body, message_id, boxType } = props;
+
+    const { deleteInboxMessage, deleteOutboxMessage } = useContext(MessageContext);
+
+    function handleDelete() {
+        if (boxType === "inbox"){
+            deleteInboxMessage(message_id)
+        } else if(boxType === "outbox"){
+            deleteOutboxMessage(message_id)
+        }
+    }
+
 return (
 <div className="message">
     <p>
@@ -17,7 +28,7 @@ return (
         <button>
             Reply
         </button>
-        <button>
+        <button onClick={handleDelete}>
             Delete
         </button>
     </div>

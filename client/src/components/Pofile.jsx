@@ -1,16 +1,40 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from '../context/ProfileProvider';
+import { MessageContext } from '../context/MessageProvider';
 import Message from './Message';
+import axios from 'axios';
+
+const axiosAddCredentials = axios.create();
+
+axiosAddCredentials.interceptors.request.use(config => {
+    const token = localStorage.getItem("token")
+        config.headers.Authorization = `Bearer ${token}`
+        return config
+})
 
 const Profile = () => {
 
+const [mailbox, setMailbox] = useState([]);
+
+
 const { profile } = useContext(ProfileContext);
 
-const { displayName, firstName, lastName, email, itemsPurchased, mailBox, reputation } = profile;
+const { displayName, firstName, lastName, email, itemsPurchased, reputation } = profile;
 
-const { inbox, outbox } = mailBox;
 
-const inboxElements = inbox.map(message => {
+function getMessages () {
+    axiosAddCredentials.get("/api/auth/message/get-messages")
+        .then(res => setMailbox(res.data.mailBox))
+        .catch(err => console.log(err))
+}
+
+
+useEffect(() => {
+    getMessages();
+}, [])
+
+
+    const inboxElements = mailbox && mailbox.inbox ? mailbox.inbox.map(message => {
     return <Message 
             to={message.to}
             from={message.from}
@@ -18,10 +42,13 @@ const inboxElements = inbox.map(message => {
             sender_id={message.senderId}
             body={message.body}
             key={message._id}
+            message_id={message._id}
+            boxType="inbox"
             />
-})
+}) : null
 
-const outboxElements = outbox.map(message => {
+
+const outboxElements = mailbox && mailbox.outbox ? mailbox.outbox.map(message => {
     return <Message 
             to={message.to}
             from={message.from}
@@ -29,8 +56,10 @@ const outboxElements = outbox.map(message => {
             sender_id={message.senderId}
             body={message.body}
             key={message._id}
+            message_id={message._id}
+            boxType="outbox"
             />
-})
+}) : null
 // map reputaion and set average
 
 return (
@@ -59,14 +88,17 @@ return (
 
         <div className='inbox'>
             <h3>Inbox</h3>
-            {inboxElements}
+            { inboxElements }
         </div>
+        <button onClick={getMessages} >
+            Refresh Mail Box
+        </button>
 
         <div className='outbox'>
             <h3>
                 Outbox
             </h3>
-            {outboxElements}
+            { outboxElements }
         </div>
 
     </div>

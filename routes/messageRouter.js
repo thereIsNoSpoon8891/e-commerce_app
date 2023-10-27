@@ -2,8 +2,19 @@ const express = require('express')
 const messageRouter = express.Router()
 const { UserProfile, Message  } = require('../models/UserProfile')
 
-
-
+// we need a route to update the user profile inbox and outbox
+messageRouter.route("/get-messages")
+.get((req, res, next) => {
+    UserProfile.findOne({_id: req.auth._id}, 'mailBox')
+        .then(mailbox => {
+            if(!mailbox){
+                res.status(404)
+                return res.send("Nothing found")
+            }
+            res.status(200).send(mailbox)
+        })
+        .catch(err => next(err))
+})
 ///////////// REWRITTEN WITH Promise.all /////////
 messageRouter.route("/send-message/:recipient_id")
 .post((req, res, next) => {

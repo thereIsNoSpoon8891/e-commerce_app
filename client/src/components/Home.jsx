@@ -44,7 +44,7 @@ const Home = () => {
                 description={item.description}
                 imageUrl={item.imageUrl}
                 price={item.price}
-                owner_id={item.itemOwner}
+                owner_id={item.itemOwner_id}
                 owner_name={item.itemOwnerName}
                 key={item._id}
                  />)
