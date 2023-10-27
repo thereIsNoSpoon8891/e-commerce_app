@@ -14,14 +14,25 @@ axiosAddCredentials.interceptors.request.use(config => {
 const MessageContextProvider = ({children}) => {
 
     // send, receive and delete messages
+    function sendMessage (receiver_id, message) {
+        axiosAddCredentials.post(`/api/auth/message/send-message/${receiver_id}`, message)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
+    }
+
+    function deleteMessage (message_id) {
+        axiosAddCredentials.delete(`/api/message/delete-inbox-message/${message_id}`)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
+    }
  
 return (
 <MessageContext.Provider value={{
-
+    sendMessage
 }}>
     {children}
 </MessageContext.Provider>
 )
 }
  
-export default MessageContextProvider
+export {MessageContextProvider, MessageContext}

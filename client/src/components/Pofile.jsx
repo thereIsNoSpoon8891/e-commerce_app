@@ -17,6 +17,7 @@ const inboxElements = inbox.map(message => {
             reciever_id={message.receiverId}
             sender_id={message.senderId}
             body={message.body}
+            key={message._id}
             />
 })
 
@@ -27,6 +28,7 @@ const outboxElements = outbox.map(message => {
             reciever_id={message.receiverId}
             sender_id={message.senderId}
             body={message.body}
+            key={message._id}
             />
 })
 // map reputaion and set average

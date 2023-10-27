@@ -47,7 +47,7 @@ messageRouter.route("/send-message/:recipient_id")
 
         res.status(201).send({
             sender: senderUpdatedProfile.mailBox.outbox, 
-            reciver: receiverUpdatedProfile.mailBox.inbox 
+            receiver: receiverUpdatedProfile.mailBox.inbox 
         });
 
     })

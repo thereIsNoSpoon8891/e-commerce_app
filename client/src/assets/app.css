@@ -276,10 +276,14 @@ fieldset{
     border: solid black 1px;
 }
 
+
+/* mail boxes */
 .mail-box--container{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    border: solid black 1px;
+    border-radius: 10px;
 }
 
 .mail-box--container h3{
@@ -289,22 +293,48 @@ fieldset{
 .inbox{
     border: solid black 1px;
     border-radius: 10px;
+    width: 200px;
 }
 
 .outbox{
     border: solid black 1px;
     border-radius: 10px;
+    width: 200px;
 }
 
 /* messages */
 
 .message-modal{
-    height: 500px;
-    width: 500px;
-    background-color: rgb(182, 177, 177);
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 350px;
+    background-color: gray;
     border-radius: 10px;
-    border: solid black 1px;
+    border: solid white 1px;
     box-shadow: -7px 7px 27px 20px rgba(120,115,115,0.75);
     -webkit-box-shadow: -7px 7px 27px 20px rgba(120,115,115,0.75);
     -moz-box-shadow: -7px 7px 27px 20px rgba(120,115,115,0.75);
+}
+
+.message-body{
+    height: 50%;
+    width: 80%;
+}
+
+.message{
+    width: 200px;
+    border: solid black 1px;
+    border-radius: 10px;
+}
+
+.message-buttons{
+    display: flex;
+    justify-content: space-evenly;
 }
