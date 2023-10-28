@@ -1,10 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { MessageContext } from '../context/MessageProvider';
-
+import MessageForm from './MessageForm';
 
 const Message = props => {
 
-    const { to, receiverId, from, senderId, body, message_id, boxType } = props;
+    const [toggleMessageForm, setToggleMessageForm] = useState(false);
+
+    const { to, receiver_id, from, sender_id, body, message_id, boxType } = props;
 
     const { deleteInboxMessage, deleteOutboxMessage } = useContext(MessageContext);
 
@@ -16,24 +18,38 @@ const Message = props => {
         }
     }
 
-    
+
+
+    function handleModal () {
+        setToggleMessageForm(prev => !prev)
+    }
+
 return (
-<div className="message">
-    <p>
-       From: {from}
-    </p>
-    <p>
-        {body}
-    </p>
-    <div className="message-buttons">
-        <button>
-            Reply
-        </button>
-        <button onClick={handleDelete}>
-            Delete
-        </button>
+<>
+    <div className="message">
+        <p>
+        From: {from}
+        </p>
+        <p>
+            {body}
+        </p>
+        <div className="message-buttons">
+            <button onClick={handleModal}>
+                Reply
+            </button>
+            <button onClick={handleDelete}>
+                Delete
+            </button>
+        </div>
     </div>
-</div>
+    {toggleMessageForm && 
+    <MessageForm 
+        sender_id={sender_id}
+        handleModal={handleModal}
+        from={to}
+        to={from}
+    />}
+</>
 )
 }
  

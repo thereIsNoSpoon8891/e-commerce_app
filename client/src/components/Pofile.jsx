@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from '../context/ProfileProvider';
 import { MessageContext } from '../context/MessageProvider';
+import MessageForm from './MessageForm';
 import Message from './Message';
 import axios from 'axios';
 
@@ -15,6 +16,7 @@ axiosAddCredentials.interceptors.request.use(config => {
 const Profile = () => {
 
 const [mailbox, setMailbox] = useState([]);
+
 
 
 const { profile } = useContext(ProfileContext);
@@ -62,7 +64,10 @@ const outboxElements = mailbox && mailbox.outbox ? mailbox.outbox.map(message =>
 }) : null
 // map reputaion and set average
 
+
+
 return (
+<>
 <div className="profile--container" >
 
     <div className='personal-data-container'>
@@ -104,6 +109,8 @@ return (
     </div>
 
 </div>
+
+</>
 )
 }
  

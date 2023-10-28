@@ -3,7 +3,7 @@ import { MessageContext } from '../context/MessageProvider';
 
 const MessageForm = props => {
 
-    const { name, owner_id, owner_name, displayName, handleModal  } = props;
+    const { name, owner_id, owner_name, displayName, handleModal, from, to, sender_id  } = props;
 
 
     const message = {
@@ -23,7 +23,7 @@ const MessageForm = props => {
     }
 
     function handleSubmit () {
-        sendMessage(owner_id, messageBody);
+        sendMessage(owner_id || sender_id, messageBody)
         setMessageBody(message);
         handleModal();
     }
@@ -34,7 +34,7 @@ return (
     <h3>
         {name}
     </h3>
-    <p>To: {owner_name}</p>
+    <p>To: {owner_name || to}</p>
     <textarea
     type='text'
     minLength={2}
@@ -57,7 +57,7 @@ return (
         </button>
 
     </div>
-    <p>From: {displayName}</p>
+    <p>From: {displayName || from}</p>
 </div>
 )
 }
