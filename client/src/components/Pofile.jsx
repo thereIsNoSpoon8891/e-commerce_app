@@ -4,6 +4,7 @@ import { MessageContext } from '../context/MessageProvider';
 import MessageForm from './MessageForm';
 import Message from './Message';
 import axios from 'axios';
+import refresharrow from '../assets/arrows-rotate-solid.svg'
 
 const axiosAddCredentials = axios.create();
 
@@ -17,8 +18,6 @@ const Profile = () => {
 
 const [mailbox, setMailbox] = useState([]);
 
-
-
 const { profile } = useContext(ProfileContext);
 
 const { displayName, firstName, lastName, email, itemsPurchased, reputation } = profile;
@@ -30,9 +29,13 @@ function getMessages () {
         .catch(err => console.log(err))
 }
 
+useEffect( () => getMessages(), [])// get intial data
 
-useEffect(() => {
-    getMessages();
+useEffect(() => {// keeps messages up to date if user doesn't un-mount component
+    const intervalId = setInterval(() => {
+        getMessages();
+    }, 30000);
+    return () => clearInterval(intervalId);// clean-up when component un-mounts
 }, [])
 
 
@@ -92,18 +95,24 @@ return (
     <div className='mail-box--container'>
 
         <div className='inbox'>
-            <h3>Inbox</h3>
+
+            <h3>
+                Inbox
+            </h3>
+
             { inboxElements }
-        </div>
-        <button onClick={getMessages} >
-            Refresh Mail Box
-        </button>
+
+            </div>
+            <img className='refresh-arrow' onClick={getMessages} src={refresharrow} width={50} />
 
         <div className='outbox'>
+
             <h3>
                 Outbox
             </h3>
+
             { outboxElements }
+            
         </div>
 
     </div>

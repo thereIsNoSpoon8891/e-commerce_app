@@ -34,9 +34,12 @@ return (
             {body}
         </p>
         <div className="message-buttons">
+            {
+            boxType === "inbox" &&
             <button onClick={handleModal}>
                 Reply
             </button>
+            }
             <button onClick={handleDelete}>
                 Delete
             </button>
