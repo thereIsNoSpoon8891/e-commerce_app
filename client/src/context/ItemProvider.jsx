@@ -1,4 +1,5 @@
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext, useEffect, useContext } from 'react';
+import { ProfileContext } from './ProfileProvider';
 import axios from 'axios';
 
 const ItemContext = createContext();
@@ -17,6 +18,8 @@ const ItemContextProvider = ({children}) => {
 const [itemsForSale, setItemsForSale] = useState([]);
 
 const [itemsSearchingFor, setItemsSearchingFor] = useState([]);
+
+const { profile } = useContext(ProfileContext);
 
 function addItemForSale (item) {
     axiosAddCredentials.post("/api/auth/items/add-item-for-sale", item)
@@ -49,10 +52,42 @@ function getSearchingForItems () {
     .catch(err => console.log(err))
 }
 
+function deleteItemForSale (item_id) {
+    axiosAddCredentials.delete(`/api/auth/items/delete-item-for-sale/${item_id}`)
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => console.log(err))
+}
+
+function deleteItemSearchingFor (item_id) {
+    axiosAddCredentials.delete(`/api/auth/items/delete-item-searching-for/${item_id}`)
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => console.log(err))
+}
+
+function updateForSaleItemsArrayInState (itemsArray, item_id) {
+
+    const updatedArray = itemsArray.filter(item => item !== item_id);
+        setItemsForSale(updatedArray);
+}
+
+function updateSearchingForItemsInItemContext(itemsArray, id) {
+    
+    const updatedArray = itemsArray.filter(item => item !== item_id);
+        setItemsSearchingFor(updatedArray);
+}
+
+function controlItemsState () {
+    getForSaleItems();
+    getSearchingForItems();
+}
+
 useEffect(() => {
 
-getForSaleItems();
-getSearchingForItems();
+controlItemsState();
 
 }, [])
 
@@ -62,9 +97,14 @@ return (
 value={{
     itemsForSale,
     itemsSearchingFor,
+    controlItemsState,
     addItemForSale,
     addItemSearchingFor,
-    addItemPurchased
+    addItemPurchased,
+    deleteItemForSale,
+    deleteItemSearchingFor,
+    updateForSaleItemsArrayInState,
+    updateSearchingForItemsInItemContext
 }}
 >
     {children}

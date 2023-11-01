@@ -1,8 +1,11 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { ItemContext } from '../context/ItemProvider'
+import { storage } from '../../firebase';
+import { DEFAULT_SALE_IMAGE, DEFAULT_WANTED_IMAGE } from '../assets/defaultImage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {v4 as id_gen} from 'uuid'
 import RedirectModal from './RedirectModal'
 
-// come back and change imageUrl to accomedate user file upload
 
 const ItemForm = () => {
 
@@ -19,33 +22,80 @@ const ItemForm = () => {
 
     const [toggleModal, setToggleModal] = useState(false);
 
+    const [image, setImage] = useState(null);
+
     const { itemName, description, imageUrl, price, formType } = itemFormData;
 
     const { addItemForSale, addItemSearchingFor, addItemPurchased } = useContext(ItemContext);
 
+    // on-change handles
     function handleChange (e) {
         const { name, value } = e.target;
         setItemFormData(prevData => ({
             ...prevData,
             [name]: value
         }))
-
     }
 
-    function handleSubmit (e) {
+    function handleImageUpload(e){
+        setImage(e.target.files[0]);
+    }
+
+    // modal handle
+    function handleModal () {
+        setToggleModal(prev => !prev);
+    }
+
+    // set default image handle
+    function handleImageAndSubmit(e) {
         e.preventDefault();
+        if(!image) {
+            if(itemFormData.formType === "for-sale"){
+                setItemFormData(prev => ({...prev, imageUrl: DEFAULT_SALE_IMAGE}));
+            } else if (itemFormData.formType === "searching-for") {
+                setItemFormData(prev => ({...prev, imageUrl: DEFAULT_WANTED_IMAGE}));
+            }
+            // something here to force a re-render, to make sure state is updated before submit
+        } else if (image) {
+            handleImageUploadbeforeSubmit();
+        }
+    }
+
+    // handle upload and submit
+    function handleImageUploadbeforeSubmit() {
+
+        const imageRef = ref(storage, `item_images/${ image.name + id_gen() }` );
+        uploadBytes(imageRef, image)
+            .then(() => {
+                getDownloadURL(imageRef)
+                    .then(url => {
+                        setItemFormData(prev => ({...prev, imageUrl: url}));
+                        console.log(url)
+                        //something here to force a re-render to make sure state is updated before submit
+                    })// set this URL as the image URL
+                    .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
+    }
+
+    function handleSubmit () {
+
             if(formType === "for-sale") {
                addItemForSale(itemFormData);
             } else if (formType === "searching-for"){
                  addItemSearchingFor(itemFormData);
             }
-                setItemFormData(ItemValues);
-                setToggleModal(true);
     }
 
-    function handleModal () {
-        setToggleModal(prev => !prev);
-    }
+    useEffect(() => {
+        if (itemFormData.imageUrl) {
+            handleSubmit();
+            setItemFormData(ItemValues);
+            setToggleModal(true);
+            setImage(null);
+        }
+    }, [itemFormData])
+
 
 
 return (
@@ -54,7 +104,7 @@ return (
 
     <div className="item--form--container">
             <form 
-            onSubmit={handleSubmit}
+            onSubmit={handleImageAndSubmit}
             className='item-form'>
 
                 <input
@@ -66,16 +116,6 @@ return (
                 name="itemName"
                 />
 
-
-                <input
-                type='text'
-                onChange={handleChange}
-                required
-                placeholder='imageUrl'
-                value={imageUrl}
-                name='imageUrl'
-                />
-
                 <input 
                 type="number"
                 onChange={handleChange}
@@ -83,6 +123,11 @@ return (
                 value={price}
                 name='price'
                 placeholder='price'
+                />
+
+                <input
+                type='file'
+                onChange={handleImageUpload}
                 />
 
                 <textarea
@@ -118,7 +163,7 @@ return (
                     />
                 </fieldset>
 
-                <button>
+                <button type='submit'>
                     Submit
                 </button>
             </form>

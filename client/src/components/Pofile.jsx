@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from '../context/ProfileProvider';
-import { MessageContext } from '../context/MessageProvider';
-import MessageForm from './MessageForm';
+import { ItemContext } from '../context/ItemProvider';
+import SearchItems from './SearchItems';
 import Message from './Message';
+import SaleItems from './SaleItems';
 import axios from 'axios';
-import refresharrow from '../assets/arrows-rotate-solid.svg'
+import refresharrow from '../assets/arrows-rotate-solid.svg';
 
 const axiosAddCredentials = axios.create();
 
@@ -18,9 +19,29 @@ const Profile = () => {
 
 const [mailbox, setMailbox] = useState([]);
 
-const { profile } = useContext(ProfileContext);
+const { 
+    profile, 
+    editProfileForSaleItemsState, 
+    editProfileSearchingItemsState 
+    } = useContext(ProfileContext);
 
-const { displayName, firstName, lastName, email, itemsPurchased, reputation } = profile;
+const { 
+    displayName, 
+    firstName, 
+    lastName, 
+    email, 
+    itemsPurchased, 
+    reputation, 
+    itemsForSale, 
+    itemsSearchingFor 
+    } = profile;
+
+    const { 
+        deleteItemForSale,
+        deleteItemSearchingFor, 
+        updateForSaleItemsArrayInState,
+        updateSearchingForItemsInItemContext
+        } = useContext(ItemContext);
 
 
 function getMessages () {
@@ -65,8 +86,36 @@ const outboxElements = mailbox && mailbox.outbox ? mailbox.outbox.map(message =>
             boxType="outbox"
             />
 }) : null
-// map reputaion and set average
 
+const profileSaleItems = itemsForSale.map(item => {
+    return <SaleItems 
+            name={item.itemName}
+            description={item.description}
+            imageUrl={item.imageUrl}
+            price={item.price}
+            id={item._id}
+            deleteItemForSale={deleteItemForSale}
+            itemsForSale={itemsForSale}
+            editProfileForSaleItemsState={editProfileForSaleItemsState}
+            updateForSaleItemsArrayInState={updateForSaleItemsArrayInState}
+            key={item._id}
+            />
+})
+
+const profileWantedItems = itemsSearchingFor.map(item => {
+    return <SearchItems
+            name={item.itemName}
+            description={item.description}
+            imageUrl={item.imageUrl}
+            price={item.price}
+            id={item._id}
+            deleteItemSearchingFor={deleteItemSearchingFor}
+            editProfileSearchingItemsState ={editProfileSearchingItemsState }
+            updateSearchingForItemsInItemContext={updateSearchingForItemsInItemContext}
+            wantedItemsArray={itemsSearchingFor}
+            key={item._id}
+            />
+})
 
 
 return (
@@ -113,6 +162,29 @@ return (
 
             { outboxElements }
             
+        </div>
+
+    </div>
+
+    <span className='profile--manage-items'> <h1> Manage {displayName}'s Items </h1> </span>
+
+    <div className='manage-items-for-sale'>
+        
+                    {/* sale items container */}
+        <div className='profile--sale-items-container'> 
+            <h1>
+                Items for sale
+            </h1>
+
+            { profileSaleItems }
+
+        </div>
+                    {/* wanted items container */}
+        <div className='profile--items-searching-for'>
+            <h1>
+                Wanted Items
+            </h1>
+            { profileWantedItems}
         </div>
 
     </div>

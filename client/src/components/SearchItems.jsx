@@ -4,7 +4,21 @@ import MessageForm from './MessageForm';
 
 const SearchItems = props => {
 
-    const { name, description, imageUrl, price, owner_id, owner_name  } = props;
+    const { 
+        name, 
+        description, 
+        imageUrl, 
+        price, 
+        owner_id, 
+        owner_name, 
+        forHome, 
+        id,
+        deleteItemSearchingFor,
+        itemsWantedInItemContextState,
+        editProfileSearchingItemsState,
+        updateSearchingForItemsInItemContext,
+        wantedItemsArray
+      } = props;
 
     const { profile: {displayName} } = useContext(ProfileContext);
 
@@ -14,6 +28,12 @@ const SearchItems = props => {
         setToggleMessageForm(prev => !prev);
     } 
 
+    function handleDelete() {
+        deleteItemSearchingFor(id)
+        editProfileSearchingItemsState(wantedItemsArray, id)
+        updateSearchingForItemsInItemContext(itemsWantedInItemContextState, id)
+    }
+// console.log(itemsWantedInItemContextState)// nothing is coming thru until the saleItems component mounts
  // thnink thru the messaging sending process, what properties do I need? where to put them?
 return (
     <>
@@ -28,18 +48,27 @@ return (
     </p>
 </div>
 
-<img src={imageUrl} />
+<img width={150} src={imageUrl} />
 <p>
     {price}
 </p>
-<p>
+
+    { forHome && 
+    <>
+    <p>
     posted by: {owner_name}
-</p>
-    <button
-    onClick={handleModal}
-    >
+    </p>
+    <button onClick={handleModal}>
         Message {owner_name}
     </button>
+    </>
+    }
+    {!forHome &&
+    <>
+    <button onClick={handleDelete}>
+        Delete post
+    </button>
+    </>}
 </div >
 {toggleMessageForm && 
     <MessageForm 

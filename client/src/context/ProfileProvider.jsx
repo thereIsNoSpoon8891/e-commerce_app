@@ -5,8 +5,6 @@ const ProfileContext = createContext();
 
 function ProfileContextProvider ({children}) {
 
-
-
     const profileProps = {
         profile: JSON.parse(localStorage.getItem("profile")) || {},
         token: localStorage.getItem("token") || "",
@@ -63,6 +61,35 @@ function ProfileContextProvider ({children}) {
         }))
     }
 
+    function editProfileForSaleItemsState (itemsArray, item_id) {
+        // when deleting items from the profile's items arrays and the items collection in the DB,
+        // it is taking too long for the updates
+        // to return, in this function, we will modify the array here in state similtanously to keep 
+        // everything up to date for the user
+        const updatedArray = itemsArray.filter(item => item._id !== item_id);
+
+        return setProfileData(prevData => ({
+            ...prevData,
+            profile: {
+                ...prevData.profile,
+                itemsForSale: updatedArray
+            }
+        }))
+    }
+
+    function editProfileSearchingItemsState (itemsArray, item_id) {
+
+        const updatedArray = itemsArray.filter(item => item._id !== item_id)
+
+        setProfileData(prevData => ({
+            ...prevData,
+            profile: {
+                ...prevData.profile,
+                itemsSearchingFor: updatedArray
+            }
+        }))
+    }
+
 return (
 <ProfileContext.Provider
 value={{
@@ -70,6 +97,8 @@ value={{
     login,
     logout,
     resetErrorMessage,
+    editProfileForSaleItemsState,
+    editProfileSearchingItemsState,
     profile,
     token
 }}>

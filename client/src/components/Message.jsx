@@ -6,7 +6,7 @@ const Message = props => {
 
     const [toggleMessageForm, setToggleMessageForm] = useState(false);
 
-    const { to, receiver_id, from, sender_id, body, message_id, boxType } = props;
+    const { to, receiver_id, from, sender_id, body, message_id, boxType, name } = props;
 
     const { deleteInboxMessage, deleteOutboxMessage } = useContext(MessageContext);
 
@@ -17,8 +17,6 @@ const Message = props => {
             deleteOutboxMessage(message_id)
         }
     }
-
-
 
     function handleModal () {
         setToggleMessageForm(prev => !prev)

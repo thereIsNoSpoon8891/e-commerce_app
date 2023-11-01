@@ -96,7 +96,7 @@ textarea{
     margin: auto;
     width: 400px;
     height: 400px;
-    background-color: rgb(57, 206, 156);
+    background-color: rgb(57, 92, 206);
 }
 
 .header--container{
@@ -146,22 +146,31 @@ textarea{
     border-bottom: solid black 2px;
 }
 
+/* items */
 .list-items{
     display: flex;
     flex-direction: column;
     border: solid black 2px;
     border-radius: 10px;
     width: 300px;
-    height: 300px;
+    height: 500px;
     margin:1%;
     background: rgb(195, 195, 195);
     align-items: center;
+    text-align: center;
+}
+
+.list-items img{
+    border-radius: 5px;
+    border: solid black 1px;
 }
 
 .list--container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    background-color: white;
+    padding-bottom: 60px;
 }
 
 .footer--container{
@@ -213,6 +222,7 @@ textarea{
     justify-content: space-evenly;
     height: 400px;
     border-radius: 10px;
+    padding-bottom: 100px;
 }
 
 .item-form > input{
@@ -236,7 +246,7 @@ fieldset{
 }
 
 .post-modal{
-    position: absolute;
+    position: fixed;
     left:50%;
     top:50%;
     transform: translate(-50%, -50%);
@@ -265,8 +275,9 @@ fieldset{
 
 .profile--container{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: rgb(174, 185, 217);
+    padding-bottom: 100px;
 }
 
 .personal-data-container{
@@ -283,6 +294,31 @@ fieldset{
     width: 50px;
 }
 
+.profile--manage-items{
+    text-align: center;
+}
+
+.manage-items-for-sale{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.profile--sale-items-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.profile--items-searching-for{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.profile-item{
+    border: solid black 1px;
+    border-radius: 5px;
+}
 
 /* mail boxes */
 .mail-box--container{
@@ -349,9 +385,11 @@ fieldset{
 
 .message{
     width: 200px;
+    height: 150px;
     border: solid black 1px;
     border-radius: 10px;
     margin: 2px;
+    background-color: rgb(228, 230, 232);
 }
 
 .message-buttons{

@@ -2,9 +2,24 @@ import { useState, useContext } from 'react';
 import { ProfileContext } from '../context/ProfileProvider';
 import MessageForm from './MessageForm';
 
+
 const SaleItems = props => {
 
-    const { name, description, imageUrl, price, owner_id, owner_name  } = props;
+    const { 
+        name, 
+        description, 
+        imageUrl, 
+        price, 
+        owner_id, 
+        owner_name, 
+        forHome, 
+        id,
+        deleteItemForSale,
+        itemsForSale,
+        editProfileForSaleItemsState,
+        updateForSaleItemsArrayInState,
+        itemForSaleInItemContextState
+      } = props;
 
     const { profile: {displayName} } = useContext(ProfileContext);
 
@@ -14,6 +29,12 @@ const SaleItems = props => {
         setToggleMessageForm(prev => !prev);
     } 
 
+    function handleDelete () {
+        deleteItemForSale(id);
+        editProfileForSaleItemsState(itemsForSale, id);
+        updateForSaleItemsArrayInState(itemForSaleInItemContextState, id)
+    }
+console.log(itemForSaleInItemContextState)
 return (
 <>
     <div className="list-items">
@@ -29,20 +50,28 @@ return (
         </p>
     </div>
 
-        <img src={imageUrl} />
+        <img width={150} src={imageUrl} />
 
         <p>
         Price: {price}
         </p>
 
-        <p>
-        posted by: {owner_name}
-        </p>
-        <button
-        onClick={handleModal}
-        >
-            Message {owner_name}
+        { forHome && 
+            <>
+                <p>
+                posted by: {owner_name}
+                </p>
+                <button onClick={handleModal}>
+                    Message {owner_name}
+                </button>
+            </>
+        }
+        {!forHome &&
+        
+        <button onClick={handleDelete}>
+            Delete Post
         </button>
+        }
     </div>
     {toggleMessageForm && 
     <MessageForm 

@@ -67,18 +67,24 @@ messageRouter.route("/send-message/:recipient_id")
 
 messageRouter.route("/delete-outbox-message/:message_id")
 .delete((req, res, next) => {
-    
-    UserProfile.updateOne({_id: req.auth._id}, {$pull:{"mailBox.outbox":{_id: req.params.message_id}}})
-        .then(response => res.status(201).send("message deleted"))
-        .catch(err => next(err))
+
+    Promise.all([
+        UserProfile.updateOne({_id: req.auth._id}, {$pull:{"mailBox.outbox":{_id: req.params.message_id}}}),
+        Message.findByIdAndRemove(req.params.message_id)
+    ])
+    .then(([deletedMessage, updatedProfile]) => res.status(204).send("Message deleted"))
+    .catch(err => next(err))
 })
 
 messageRouter.route("/delete-inbox-message/:message_id")
 .delete((req, res, next) => {
     
-    UserProfile.updateOne({_id: req.auth._id}, {$pull:{"mailBox.inbox":{_id: req.params.message_id}}})
-        .then(response => res.status(201).send("message deleted"))
-        .catch(err => next(err))
+    Promise.all([
+        UserProfile.updateOne({_id: req.auth._id}, {$pull:{"mailBox.inbox":{_id: req.params.message_id}}}),
+        Message.findByIdAndRemove(req.params.message_id)
+    ])
+    .then(([deletedMessage, updatedProfile]) => res.status(204).send("Message deleted"))
+    .catch(err => next(err))
 })
 
 module.exports = messageRouter

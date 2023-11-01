@@ -64,26 +64,35 @@ itemsRouter.route("/add-items-purchased")
 itemsRouter.route("/delete-item-searching-for/:itemId")
 .delete((req, res, next) => {
 
-    UserProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsSearchingFor: {_id: req.params.itemId}}}, {new: true})
-        .then(profile => res.status(201).send(profile))
-        .catch(err => next(err))
+const item_id = req.params.itemId;
+const deleteItem = Item.findByIdAndRemove(item_id);
+const removeItemFromProfile = UserProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsSearchingFor: {_id: req.params.itemId}}}, {new: true})
 
-})
-
-itemsRouter.route("/delete-item-for-sale/:itemId")// remove from itemsforsale
-.delete((req, res, next) => {
-
-    UserProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsForSale: {_id: req.params.itemId}}}, {new: true})
-        .then(profile => res.send(profile))
+    Promise.all([ deleteItem, removeItemFromProfile ])
+        .then(([deletedItem, updatedProfile])=> res.status(200).send("Item removed"))
         .catch(err => next(err))
 })
 
-itemsRouter.route("/delete-item-purchased/:itemId")// remove from itemsforsale
+itemsRouter.route("/delete-item-for-sale/:itemId")
 .delete((req, res, next) => {
 
-    UserProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsPurchased: {_id: req.params.itemId}}}, {new: true})
-        .then(profile => res.send(profile))
-        .catch(err => next(err))
+    Promise.all([
+        UserProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsForSale: {_id: req.params.itemId}}}, {new: true}),
+        Item.findByIdAndRemove(req.params.itemId)
+     ])
+     .then(([deletedItem, updatedProfile]) => res.status(200).send("Item removed"))
+     .catch(err => next(err))
+})
+
+itemsRouter.route("/delete-item-purchased/:itemId")
+.delete((req, res, next) => {
+
+    Promise.all([
+        UserProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsPurchased: {_id: req.params.itemId}}}, {new: true}),
+        Item.findByIdAndRemove(req.params.itemId)
+    ])
+    .then(([deletedItem, updatedProfile]) => res.status(204).send("Item deleted"))
+    .catch(err => next(err))
 })
 
 module.exports = itemsRouter
@@ -91,7 +100,9 @@ module.exports = itemsRouter
 
 
 
-
+    // UserProfile.findByIdAndUpdate(req.auth._id, {$pull: {itemsSearchingFor: {_id: req.params.itemId}}}, {new: true})
+    //     .then(profile => res.status(201).send(profile))
+    //     .catch(err => next(err))
 
 
 

@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { ProfileContext } from '../context/ProfileProvider';
-
+import HomeIcon from '../assets/house-solid.svg'
 
 const Header = () => {
  
@@ -16,8 +16,11 @@ return (
 <div className='header--container'>
     <Link to="/">
         <h1>
-            App Name
+            Yard Sales Most Wanted
         </h1>
+    </Link>
+    <Link to='/'>
+        <img width={50} src={HomeIcon} />
     </Link>
 
     <h6>

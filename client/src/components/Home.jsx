@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { ProfileContext } from '../context/ProfileProvider';
 import { ItemContext } from '../context/ItemProvider';
 import SaleItems from './SaleItems';
@@ -10,7 +10,7 @@ const Home = () => {
  
 
 
-    const { itemsForSale, itemsSearchingFor } = useContext(ItemContext);
+    const { itemsForSale, itemsSearchingFor, controlItemsState } = useContext(ItemContext);
 
     const [toggleLists, setToggleLists] = useState(true);
 
@@ -35,6 +35,8 @@ const Home = () => {
                 owner_id={item.itemOwner_id}
                 owner_name={item.itemOwnerName}
                 key={item._id}
+                forHome={true}
+                itemForSaleInItemContextState={itemsForSale}
                  />)
     })
 
@@ -47,8 +49,14 @@ const Home = () => {
                 owner_id={item.itemOwner_id}
                 owner_name={item.itemOwnerName}
                 key={item._id}
+                forHome={true}
+                itemsWantedInItemContextState={itemsSearchingFor}
                  />)
     })
+
+    useEffect(() => {
+        controlItemsState()
+    },[])
 
 return (
 <div className='home--wrapper'>
@@ -57,7 +65,7 @@ return (
             For sale
         </h1>
         <h1 className={underline ? "" : "underlined"} onClick={showSearchItems}>
-            Searching
+            Wanted 
         </h1>
     </div>
     <div className='list--container'>
