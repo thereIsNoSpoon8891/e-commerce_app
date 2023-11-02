@@ -16,12 +16,12 @@ const Home = () => {
 
     const [underline, setUnderline] = useState(true);
 
-    function showSaleItems () {
+    function showSaleItems() {
         setToggleLists(true);
         setUnderline(true);
     }
 
-    function showSearchItems () {
+    function showSearchItems() {
         setToggleLists(false);
         setUnderline(false);
     }

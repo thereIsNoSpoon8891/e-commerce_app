@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { ItemContext } from '../context/ItemProvider'
+import { ProfileContext } from '../context/ProfileProvider';
 import { storage } from '../../firebase';
 import { DEFAULT_SALE_IMAGE, DEFAULT_WANTED_IMAGE } from '../assets/defaultImage';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -28,8 +29,10 @@ const ItemForm = () => {
 
     const { addItemForSale, addItemSearchingFor, addItemPurchased } = useContext(ItemContext);
 
+    const { addItemToProfileItemsForSale, addItemToProfileSearchItems } = useContext(ProfileContext);
+
     // on-change handles
-    function handleChange (e) {
+    function handleChange(e) {
         const { name, value } = e.target;
         setItemFormData(prevData => ({
             ...prevData,
@@ -55,7 +58,6 @@ const ItemForm = () => {
             } else if (itemFormData.formType === "searching-for") {
                 setItemFormData(prev => ({...prev, imageUrl: DEFAULT_WANTED_IMAGE}));
             }
-            // something here to force a re-render, to make sure state is updated before submit
         } else if (image) {
             handleImageUploadbeforeSubmit();
         }
@@ -70,15 +72,13 @@ const ItemForm = () => {
                 getDownloadURL(imageRef)
                     .then(url => {
                         setItemFormData(prev => ({...prev, imageUrl: url}));
-                        console.log(url)
-                        //something here to force a re-render to make sure state is updated before submit
                     })// set this URL as the image URL
                     .catch(err => console.log(err))
             })
             .catch(err => console.log(err))
     }
 
-    function handleSubmit () {
+    function handleSubmit() {
 
             if(formType === "for-sale") {
                addItemForSale(itemFormData);
@@ -89,6 +89,11 @@ const ItemForm = () => {
 
     useEffect(() => {
         if (itemFormData.imageUrl) {
+            if(formType === "for-sale") {
+                addItemToProfileItemsForSale(itemFormData);
+            } else if (formType === "searching-for") {
+                addItemToProfileSearchItems(itemFormData);
+            }
             handleSubmit();
             setItemFormData(ItemValues);
             setToggleModal(true);
@@ -163,7 +168,7 @@ return (
                     />
                 </fieldset>
 
-                <button type='submit'>
+                <button disabled={toggleModal ? true : false} type='submit'>
                     Submit
                 </button>
             </form>

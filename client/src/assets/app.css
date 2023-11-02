@@ -12,8 +12,13 @@ html, body{
     margin: 0;
 }
 textarea{
+    font-family: sans-serif;
     resize: none;
     border-radius: 10px;
+}
+
+textarea::placeholder{
+    font-family: sans-serif;
 }
 
 

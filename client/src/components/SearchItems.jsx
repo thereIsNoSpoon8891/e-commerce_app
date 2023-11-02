@@ -48,7 +48,8 @@ return (
     </p>
 </div>
 
-<img width={150} src={imageUrl} />
+{imageUrl ? <img width={150} src={imageUrl} /> : <p>Loading Image...</p>}
+
 <p>
     {price}
 </p>

@@ -90,6 +90,29 @@ function ProfileContextProvider ({children}) {
         }))
     }
 
+    // we will need to do the same when adding items, because we are pulling them from teh profile,
+    // which is being set on Login, I cant re-fire the login function to update the profle state,
+    //so we will handle that here...
+    function addItemToProfileItemsForSale(item) {
+        setProfileData(prevData => ({
+            ...prevData,
+            profile: {
+                ...prevData.profile,
+                itemsForSale:[...prevData.profile.itemsForSale, item]
+            }
+        }))
+    }
+
+    function addItemToProfileSearchItems(item) {
+            setProfileData(prevData => ({
+                ...prevData,
+                profile: {
+                    ...prevData.profile,
+                    itemsSearchingFor: [...prevData.profile.itemsSearchingFor, item]
+                }
+            }))
+    }
+
 return (
 <ProfileContext.Provider
 value={{
@@ -99,6 +122,8 @@ value={{
     resetErrorMessage,
     editProfileForSaleItemsState,
     editProfileSearchingItemsState,
+    addItemToProfileItemsForSale,
+    addItemToProfileSearchItems,
     profile,
     token
 }}>

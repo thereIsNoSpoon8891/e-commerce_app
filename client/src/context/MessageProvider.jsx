@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext } from 'react';
+import { ProfileContext } from './ProfileProvider';
 import axios from "axios";
 
 const MessageContext = createContext();
@@ -13,6 +14,7 @@ axiosAddCredentials.interceptors.request.use(config => {
 
 const MessageContextProvider = ({children}) => {
 
+    const { profile } = useContext(ProfileContext);
 
     // send, receive and delete messages
     function sendMessage (receiver_id, message) {
@@ -31,9 +33,7 @@ const MessageContextProvider = ({children}) => {
         axiosAddCredentials.delete(`/api/auth/message/delete-outbox-message/${message_id}`)
         .then(res => console.log(res.data))
         .catch(err => console.log(err))
-
     }
-
 
 return (
 <MessageContext.Provider value={{

@@ -34,7 +34,7 @@ const SaleItems = props => {
         editProfileForSaleItemsState(itemsForSale, id);
         updateForSaleItemsArrayInState(itemForSaleInItemContextState, id)
     }
-console.log(itemForSaleInItemContextState)
+
 return (
 <>
     <div className="list-items">
@@ -49,8 +49,8 @@ return (
             {description}
         </p>
     </div>
+        {imageUrl ? <img width={150} src={imageUrl} /> : <p>Loading Image...</p>}
 
-        <img width={150} src={imageUrl} />
 
         <p>
         Price: {price}

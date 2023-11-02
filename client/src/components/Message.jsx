@@ -6,19 +6,32 @@ const Message = props => {
 
     const [toggleMessageForm, setToggleMessageForm] = useState(false);
 
-    const { to, receiver_id, from, sender_id, body, message_id, boxType, name } = props;
+    const { 
+        to, 
+        receiver_id, 
+        from, 
+        sender_id, 
+        body, 
+        message_id, 
+        boxType, 
+        name, 
+        removeInboxMessageInState,
+        removeOutboxMessageInState
+        } = props;
 
     const { deleteInboxMessage, deleteOutboxMessage } = useContext(MessageContext);
 
     function handleDelete() {
         if (boxType === "inbox"){
-            deleteInboxMessage(message_id)
+            deleteInboxMessage(message_id);//API call
+                removeInboxMessageInState(message_id);//update state
         } else if(boxType === "outbox"){
-            deleteOutboxMessage(message_id)
+            deleteOutboxMessage(message_id);//API call
+                removeOutboxMessageInState(message_id);// update state
         }
     }
 
-    function handleModal () {
+    function handleModal() {
         setToggleMessageForm(prev => !prev)
     }
 

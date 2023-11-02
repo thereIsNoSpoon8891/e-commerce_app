@@ -44,10 +44,29 @@ const {
         } = useContext(ItemContext);
 
 
-function getMessages () {
+function getMessages() {
     axiosAddCredentials.get("/api/auth/message/get-messages")
         .then(res => setMailbox(res.data.mailBox))
         .catch(err => console.log(err))
+}
+// we have the same issue here as we did in the items context, its becoming clear that
+// it should be convention to modify state in tandem with our API calls.
+function removeInboxMessageInState(message_id) {
+    const { inbox } = mailbox;
+        const updatedInbox = inbox.filter(message => message._id !== message_id);
+            setMailbox(prevData => ({
+                ...prevData,
+                inbox: updatedInbox
+            }))
+}
+
+function removeOutboxMessageInState(message_id) {
+    const { outbox } = mailbox;
+        const updatedOutbox = outbox.filter(message => message._id !== message_id);
+            setMailbox(prevData => ({
+                ...prevData,
+                outbox: updatedOutbox
+            }))
 }
 
 useEffect( () => getMessages(), [])// get intial data
@@ -69,6 +88,7 @@ useEffect(() => {// keeps messages up to date if user doesn't un-mount component
             body={message.body}
             key={message._id}
             message_id={message._id}
+            removeInboxMessageInState={removeInboxMessageInState}
             boxType="inbox"
             />
 }) : null
@@ -83,6 +103,7 @@ const outboxElements = mailbox && mailbox.outbox ? mailbox.outbox.map(message =>
             body={message.body}
             key={message._id}
             message_id={message._id}
+            removeOutboxMessageInState={removeOutboxMessageInState}
             boxType="outbox"
             />
 }) : null

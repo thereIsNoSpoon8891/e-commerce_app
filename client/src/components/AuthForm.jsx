@@ -35,7 +35,7 @@ const AuthForm = () => {
 
     const { signup, login } = useContext(ProfileContext);
 
-    function signUpHandleChange (e) {
+    function signUpHandleChange(e) {
         const { name, value } = e.target
             setSignUpForm(prevData => ({
                 ...prevData,
@@ -43,7 +43,7 @@ const AuthForm = () => {
             }))
     }
 
-    function loginHandleChange (e) {
+    function loginHandleChange(e) {
         const { name, value } = e.target
         setLoginFormData(prevData => ({
             ...prevData,
@@ -51,7 +51,7 @@ const AuthForm = () => {
         }))
     }
 
-    function handleSignUp (e) {
+    function handleSignUp(e) {
 
         e.preventDefault();
 
@@ -69,16 +69,12 @@ const AuthForm = () => {
                 }
     }
 
-    function handleLogin (e) {
+    function handleLogin(e) {
         e.preventDefault();
             login(loginFormData)
     }
-
-    function changeForm () {
-        setToggleForms(prev => !prev);
-    }
     
-    function navToLogin () {
+    function navToLogin() {
         setToggleForms(true)
     }
 
