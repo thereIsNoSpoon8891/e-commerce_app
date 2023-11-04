@@ -126,6 +126,12 @@ textarea::placeholder{
     margin: 5px;
 }
 
+.header--container img{
+    border: solid black 2px;
+    border-radius: 5px;
+    padding: 1px;
+}
+
 .home--wrapper{
     height: 100vh;
     width: 100%;
@@ -145,10 +151,12 @@ textarea::placeholder{
 .selection--wrapper h1{
     width: 200px;
     text-align: center;
+    cursor: pointer;
 }
 
 .underlined{
     border-bottom: solid black 2px;
+    cursor: pointer;
 }
 
 /* items */

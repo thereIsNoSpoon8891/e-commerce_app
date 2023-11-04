@@ -15,10 +15,11 @@ const SaleItems = props => {
         forHome, 
         id,
         deleteItemForSale,
-        itemsForSale,
+        itemsForSaleInProfileState,
         editProfileForSaleItemsState,
         updateForSaleItemsArrayInState,
-        itemForSaleInItemContextState
+        itemForSaleInItemContextState,
+        itemsForSaleItemContext
       } = props;
 
     const { profile: {displayName} } = useContext(ProfileContext);
@@ -31,8 +32,8 @@ const SaleItems = props => {
 
     function handleDelete () {
         deleteItemForSale(id);
-        editProfileForSaleItemsState(itemsForSale, id);
-        updateForSaleItemsArrayInState(itemForSaleInItemContextState, id)
+        editProfileForSaleItemsState(itemsForSaleInProfileState, id);
+        updateForSaleItemsArrayInState(itemsForSaleItemContext, id);
     }
 
 return (
@@ -80,6 +81,7 @@ return (
     owner_name={owner_name} 
     displayName={displayName}
     handleModal={handleModal}
+    key={id}
     />}
 </>
 )

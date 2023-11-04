@@ -40,10 +40,13 @@ const {
         deleteItemForSale,
         deleteItemSearchingFor, 
         updateForSaleItemsArrayInState,
-        updateSearchingForItemsInItemContext
+        updateSearchingForItemsInItemContext,
+        controlItemsState,
+        itemsForSaleItemContext,
+        itemsWantedItemContext
         } = useContext(ItemContext);
-
-
+console.log(itemsForSale)
+// console.log(itemsWantedItemContext)
 function getMessages() {
     axiosAddCredentials.get("/api/auth/message/get-messages")
         .then(res => setMailbox(res.data.mailBox))
@@ -69,7 +72,9 @@ function removeOutboxMessageInState(message_id) {
             }))
 }
 
-useEffect( () => getMessages(), [])// get intial data
+useEffect(() => controlItemsState(), []);
+
+useEffect(() => getMessages(), []);// get intial data
 
 useEffect(() => {// keeps messages up to date if user doesn't un-mount component
     const intervalId = setInterval(() => {
@@ -77,7 +82,6 @@ useEffect(() => {// keeps messages up to date if user doesn't un-mount component
     }, 30000);
     return () => clearInterval(intervalId);// clean-up when component un-mounts
 }, [])
-
 
     const inboxElements = mailbox && mailbox.inbox ? mailbox.inbox.map(message => {
     return <Message 
@@ -116,7 +120,8 @@ const profileSaleItems = itemsForSale.map(item => {
             price={item.price}
             id={item._id}
             deleteItemForSale={deleteItemForSale}
-            itemsForSale={itemsForSale}
+            itemsForSaleInProfileState={itemsForSale}
+            itemsForSaleItemContext={itemsForSaleItemContext}
             editProfileForSaleItemsState={editProfileForSaleItemsState}
             updateForSaleItemsArrayInState={updateForSaleItemsArrayInState}
             key={item._id}
@@ -133,7 +138,9 @@ const profileWantedItems = itemsSearchingFor.map(item => {
             deleteItemSearchingFor={deleteItemSearchingFor}
             editProfileSearchingItemsState ={editProfileSearchingItemsState }
             updateSearchingForItemsInItemContext={updateSearchingForItemsInItemContext}
-            wantedItemsArray={itemsSearchingFor}
+            wantedItemsArrayInProfileState={itemsSearchingFor}
+            itemsWantedItemContext={itemsWantedItemContext}
+            itemType="wanted"
             key={item._id}
             />
 })

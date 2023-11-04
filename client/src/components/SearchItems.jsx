@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { ProfileContext } from '../context/ProfileProvider';
 import MessageForm from './MessageForm';
+import ConfirmDelete from './ConfirmDelete';
 
 const SearchItems = props => {
 
@@ -17,21 +18,30 @@ const SearchItems = props => {
         itemsWantedInItemContextState,
         editProfileSearchingItemsState,
         updateSearchingForItemsInItemContext,
-        wantedItemsArray
+        wantedItemsArrayInProfileState,
+        itemsWantedItemContext,
+        itemType
       } = props;
 
     const { profile: {displayName} } = useContext(ProfileContext);
 
     const [toggleMessageForm, setToggleMessageForm] = useState(false);
 
+    const [toggleConfirmDeleteItem, setToggleConfirmDeleteitem] = useState(false);
+
     function handleModal () {
         setToggleMessageForm(prev => !prev);
     } 
 
+    function handleDeleteModal() {
+        setToggleConfirmDeleteitem(prev => !prev);
+    }
+
     function handleDelete() {
-        deleteItemSearchingFor(id)
-        editProfileSearchingItemsState(wantedItemsArray, id)
-        updateSearchingForItemsInItemContext(itemsWantedInItemContextState, id)
+        handleDeleteModal();
+        // deleteItemSearchingFor(id)
+        // editProfileSearchingItemsState(wantedItemsArray, id)
+        // updateSearchingForItemsInItemContext(itemsWantedInItemContextState, id)
     }
 // console.log(itemsWantedInItemContextState)// nothing is coming thru until the saleItems component mounts
  // thnink thru the messaging sending process, what properties do I need? where to put them?
@@ -78,6 +88,19 @@ return (
     owner_name={owner_name} 
     displayName={displayName}
     handleModal={handleModal}
+    />}
+    {toggleConfirmDeleteItem && 
+    <ConfirmDelete
+    id={id}
+    name={name}
+    wantedItemsArrayInProfileState={wantedItemsArrayInProfileState}
+    handleDeleteModal={handleDeleteModal}
+    deleteItemSearchingFor={deleteItemSearchingFor}
+    editProfileSearchingItemsState={editProfileSearchingItemsState}
+    updateSearchingForItemsInItemContext={updateSearchingForItemsInItemContext}
+    itemsWantedInItemContextState={itemsWantedInItemContextState}
+    itemsWantedItemContext={itemsWantedItemContext}
+    itemType={itemType}
     />}
     </>
 )

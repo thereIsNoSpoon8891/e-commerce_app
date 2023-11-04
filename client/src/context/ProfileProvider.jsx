@@ -90,8 +90,8 @@ function ProfileContextProvider ({children}) {
         }))
     }
 
-    // we will need to do the same when adding items, because we are pulling them from teh profile,
-    // which is being set on Login, I cant re-fire the login function to update the profle state,
+    // we will need to do the same when adding items, because we are pulling them from the profile,
+    // which is being set on Login, I cant re-fire the login function to update the profile state,
     //so we will handle that here...
     function addItemToProfileItemsForSale(item) {
         setProfileData(prevData => ({

@@ -19,8 +19,6 @@ const [itemsForSale, setItemsForSale] = useState([]);
 
 const [itemsSearchingFor, setItemsSearchingFor] = useState([]);
 
-const { profile } = useContext(ProfileContext);
-
 function addItemForSale (item) {
     axiosAddCredentials.post("/api/auth/items/add-item-for-sale", item)
         .then(res => getForSaleItems())
@@ -46,13 +44,13 @@ function getForSaleItems() {
     .catch(err => console.log(err))
 }
 
-function getSearchingForItems () {
+function getSearchingForItems() {
     axios.get("/api/public/items-searching-for")
     .then(res => setItemsSearchingFor( res.data ))
     .catch(err => console.log(err))
 }
 
-function deleteItemForSale (item_id) {
+function deleteItemForSale(item_id) {
     axiosAddCredentials.delete(`/api/auth/items/delete-item-for-sale/${item_id}`)
     .then(res => {
         console.log(res)
@@ -60,26 +58,27 @@ function deleteItemForSale (item_id) {
     .catch(err => console.log(err))
 }
 
-function deleteItemSearchingFor (item_id) {
+function deleteItemSearchingFor(item_id) {
     axiosAddCredentials.delete(`/api/auth/items/delete-item-searching-for/${item_id}`)
     .then(res => {
         console.log(res)
     })
     .catch(err => console.log(err))
 }
+/////////////////////////////
+function updateForSaleItemsArrayInState(itemsArray, item_id) {
+    console.log(itemsArray)
 
-function updateForSaleItemsArrayInState (itemsArray, item_id) {
-
-    const updatedArray = itemsArray.filter(item => item !== item_id);
+    const updatedArray = itemsArray.filter(item => item._id !== item_id);
         setItemsForSale(updatedArray);
 }
 
-function updateSearchingForItemsInItemContext(itemsArray, id) {
-    
-    const updatedArray = itemsArray.filter(item => item !== item_id);
+function updateSearchingForItemsInItemContext(itemsArray, item_id) {
+    console.log(itemsArray)
+    const updatedArray = itemsArray.filter(item => item._id !== item_id);
         setItemsSearchingFor(updatedArray);
 }
-
+///////////////////////////
 function controlItemsState () {
     getForSaleItems();
     getSearchingForItems();
@@ -95,8 +94,8 @@ controlItemsState();
 return (
 <ItemContext.Provider
 value={{
-    itemsForSale,
-    itemsSearchingFor,
+    itemsForSaleItemContext: itemsForSale,
+    itemsWantedItemContext: itemsSearchingFor,
     controlItemsState,
     addItemForSale,
     addItemSearchingFor,

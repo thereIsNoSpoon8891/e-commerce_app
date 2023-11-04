@@ -10,7 +10,7 @@ const Home = () => {
  
 
 
-    const { itemsForSale, itemsSearchingFor, controlItemsState } = useContext(ItemContext);
+    const { itemsForSaleItemContext, itemsWantedItemContext, controlItemsState } = useContext(ItemContext);
 
     const [toggleLists, setToggleLists] = useState(true);
 
@@ -26,7 +26,7 @@ const Home = () => {
         setUnderline(false);
     }
 
-    const saleItems = itemsForSale.map(item => {
+    const saleItems = itemsForSaleItemContext.map(item => {
         return (<SaleItems
                 name={item.itemName}
                 description={item.description}
@@ -36,11 +36,11 @@ const Home = () => {
                 owner_name={item.itemOwnerName}
                 key={item._id}
                 forHome={true}
-                itemForSaleInItemContextState={itemsForSale}
+                itemForSaleInItemContextState={itemsForSaleItemContext}
                  />)
     })
 
-    const searchItems = itemsSearchingFor.map(item => {
+    const searchItems = itemsWantedItemContext.map(item => {
         return (<SearchItems
                 name={item.itemName}
                 description={item.description}
@@ -50,13 +50,21 @@ const Home = () => {
                 owner_name={item.itemOwnerName}
                 key={item._id}
                 forHome={true}
-                itemsWantedInItemContextState={itemsSearchingFor}
+                itemsWantedInItemContextState={itemsWantedItemContext}
                  />)
     })
 
     useEffect(() => {
         controlItemsState()
-    },[])
+    }, [])
+
+    useEffect(() => {
+        const forceRender = setTimeout(() => {
+            setUnderline(false);
+            setToggleLists(false);
+        }, 500);
+        return () => clearTimeout(forceRender)
+    }, [])
 
 return (
 <div className='home--wrapper'>
