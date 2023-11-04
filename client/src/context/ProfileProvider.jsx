@@ -3,6 +3,14 @@ import axios from 'axios';
 
 const ProfileContext = createContext();
 
+const axiosAddCredentials = axios.create();
+
+axiosAddCredentials.interceptors.request.use(config => {
+    const token = localStorage.getItem("token")
+        config.headers.Authorization = `Bearer ${token}`
+        return config
+})
+
 function ProfileContextProvider ({children}) {
 
     const profileProps = {
@@ -47,7 +55,7 @@ function ProfileContextProvider ({children}) {
         });
     }
 
-    function handleError (err) {
+    function handleError(err) {
         setProfileData(prevData => ({
             ...prevData,
             errorMessage: err
@@ -61,7 +69,13 @@ function ProfileContextProvider ({children}) {
         }))
     }
 
-    function editProfileForSaleItemsState (itemsArray, item_id) {
+    // the items are persisting in localStorage, we need to either update localStorage at the same time of make another request
+
+    function updateProfile() {
+        
+    }
+
+    function editProfileForSaleItemsState(itemsArray, item_id) {
         // when deleting items from the profile's items arrays and the items collection in the DB,
         // it is taking too long for the updates
         // to return, in this function, we will modify the array here in state similtanously to keep 
@@ -77,7 +91,7 @@ function ProfileContextProvider ({children}) {
         }))
     }
 
-    function editProfileSearchingItemsState (itemsArray, item_id) {
+    function editProfileSearchingItemsState(itemsArray, item_id) {
 
         const updatedArray = itemsArray.filter(item => item._id !== item_id)
 

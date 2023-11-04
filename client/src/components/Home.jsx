@@ -59,6 +59,9 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
+        // This is my dirty way of handling setting the data for props across components,
+        // otherise if the user goes straight to their profile page, some of the data is undefined
+        // working on learning how to handle this in a cleaner way....
         const forceRender = setTimeout(() => {
             setUnderline(false);
             setToggleLists(false);

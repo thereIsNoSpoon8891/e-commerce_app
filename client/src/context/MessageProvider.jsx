@@ -1,5 +1,4 @@
-import { createContext, useContext } from 'react';
-import { ProfileContext } from './ProfileProvider';
+import { createContext } from 'react';
 import axios from "axios";
 
 const MessageContext = createContext();
@@ -13,8 +12,6 @@ axiosAddCredentials.interceptors.request.use(config => {
 })
 
 const MessageContextProvider = ({children}) => {
-
-    const { profile } = useContext(ProfileContext);
 
     // send, receive and delete messages
     function sendMessage (receiver_id, message) {

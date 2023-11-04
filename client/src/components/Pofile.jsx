@@ -45,8 +45,7 @@ const {
         itemsForSaleItemContext,
         itemsWantedItemContext
         } = useContext(ItemContext);
-console.log(itemsForSale)
-// console.log(itemsWantedItemContext)
+
 function getMessages() {
     axiosAddCredentials.get("/api/auth/message/get-messages")
         .then(res => setMailbox(res.data.mailBox))

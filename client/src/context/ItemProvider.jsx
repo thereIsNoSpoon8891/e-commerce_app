@@ -12,7 +12,6 @@ axiosAddCredentials.interceptors.request.use(config => {
         return config
 })
 
-
 const ItemContextProvider = ({children}) => {
 
 const [itemsForSale, setItemsForSale] = useState([]);
@@ -85,11 +84,8 @@ function controlItemsState () {
 }
 
 useEffect(() => {
-
 controlItemsState();
-
 }, [])
-
 
 return (
 <ItemContext.Provider
