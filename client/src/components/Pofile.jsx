@@ -123,6 +123,7 @@ const profileSaleItems = itemsForSale.map(item => {
             itemsForSaleItemContext={itemsForSaleItemContext}
             editProfileForSaleItemsState={editProfileForSaleItemsState}
             updateForSaleItemsArrayInState={updateForSaleItemsArrayInState}
+            itemType="for-sale"
             key={item._id}
             />
 })

@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 const ProfileContext = createContext();
@@ -71,17 +71,13 @@ function ProfileContextProvider ({children}) {
 
     // the items are persisting in localStorage, we need to either update localStorage at the same time of make another request
 
-    function updateProfile() {
-        
-    }
-
     function editProfileForSaleItemsState(itemsArray, item_id) {
         // when deleting items from the profile's items arrays and the items collection in the DB,
         // it is taking too long for the updates
         // to return, in this function, we will modify the array here in state similtanously to keep 
         // everything up to date for the user
         const updatedArray = itemsArray.filter(item => item._id !== item_id);
-
+        // update state
         return setProfileData(prevData => ({
             ...prevData,
             profile: {
@@ -90,6 +86,31 @@ function ProfileContextProvider ({children}) {
             }
         }))
     }
+useEffect(() => { // modifying localStorage along with state 
+    if(profileData.token) {
+      
+        // Get the current profile data from local storage
+        let localProfile = JSON.parse(localStorage.getItem("profile"));
+        
+        // In this part we compare the state and local data.
+        // If either "itemsForSale" or "itemsSearchingFor" are not equal, we update the local storage.
+        
+        if(localProfile.itemsForSale !== profileData.profile.itemsForSale ||
+           localProfile.itemsSearchingFor !== profileData.profile.itemsSearchingFor) {
+          
+            // Update the local storage with the new items
+            localProfile.itemsForSale = profileData.profile.itemsForSale;
+            localProfile.itemsSearchingFor = profileData.profile.itemsSearchingFor;
+            
+            // Convert the profile data back into a string to store in local storage.
+            let updatedProfile = JSON.stringify(localProfile);
+            
+            // Update the local storage with the new profileData.
+            localStorage.setItem("profile", updatedProfile);
+        }
+    }
+}, [profileData])
+
 
     function editProfileSearchingItemsState(itemsArray, item_id) {
 

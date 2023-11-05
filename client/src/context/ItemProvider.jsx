@@ -66,14 +66,11 @@ function deleteItemSearchingFor(item_id) {
 }
 /////////////////////////////
 function updateForSaleItemsArrayInState(itemsArray, item_id) {
-    console.log(itemsArray)
-
     const updatedArray = itemsArray.filter(item => item._id !== item_id);
         setItemsForSale(updatedArray);
 }
 
 function updateSearchingForItemsInItemContext(itemsArray, item_id) {
-    console.log(itemsArray)
     const updatedArray = itemsArray.filter(item => item._id !== item_id);
         setItemsSearchingFor(updatedArray);
 }

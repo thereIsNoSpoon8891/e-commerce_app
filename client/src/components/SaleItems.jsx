@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { ProfileContext } from '../context/ProfileProvider';
 import MessageForm from './MessageForm';
-
+import ConfirmDelete from './ConfirmDelete';
 
 const SaleItems = props => {
 
@@ -18,17 +18,23 @@ const SaleItems = props => {
         itemsForSaleInProfileState,
         editProfileForSaleItemsState,
         updateForSaleItemsArrayInState,
-        itemForSaleInItemContextState,
-        itemsForSaleItemContext
+        itemsForSaleItemContext,
+        itemType
       } = props;
 
     const { profile: {displayName} } = useContext(ProfileContext);
 
     const [toggleMessageForm, setToggleMessageForm] = useState(false);
 
+    const [toggleConfirmDeleteItem, setToggleConfirmDeleteitem] = useState(false);
+
     function handleModal () {
         setToggleMessageForm(prev => !prev);
     } 
+
+    function handleDeleteModal() {
+        setToggleConfirmDeleteitem(prev => !prev);
+    }
 
     function handleDelete () {
         deleteItemForSale(id);
@@ -69,7 +75,7 @@ return (
         }
         {!forHome &&
         
-        <button onClick={handleDelete}>
+        <button onClick={handleDeleteModal}>
             Delete Post
         </button>
         }
@@ -83,6 +89,19 @@ return (
     handleModal={handleModal}
     key={id}
     />}
+    {toggleConfirmDeleteItem && 
+    <ConfirmDelete
+    itemType={itemType}
+    name={name}
+    id={id}
+    handleDeleteModal={handleDeleteModal}
+    editProfileForSaleItemsState={editProfileForSaleItemsState}
+    itemsForSaleInProfileState={itemsForSaleInProfileState}
+    itemsForSaleItemContext={itemsForSaleItemContext}
+    deleteItemForSale={deleteItemForSale}
+    updateForSaleItemsArrayInState={updateForSaleItemsArrayInState}
+    />
+    }
 </>
 )
 }

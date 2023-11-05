@@ -93,14 +93,14 @@ return (
     <ConfirmDelete
     id={id}
     name={name}
-    wantedItemsArrayInProfileState={wantedItemsArrayInProfileState}
-    handleDeleteModal={handleDeleteModal}
-    deleteItemSearchingFor={deleteItemSearchingFor}
-    editProfileSearchingItemsState={editProfileSearchingItemsState}
-    updateSearchingForItemsInItemContext={updateSearchingForItemsInItemContext}
-    itemsWantedInItemContextState={itemsWantedInItemContextState}
-    itemsWantedItemContext={itemsWantedItemContext}
     itemType={itemType}
+    handleDeleteModal={handleDeleteModal}
+    itemsWantedItemContext={itemsWantedItemContext}
+    deleteItemSearchingFor={deleteItemSearchingFor}
+    wantedItemsArrayInProfileState={wantedItemsArrayInProfileState}
+    editProfileSearchingItemsState={editProfileSearchingItemsState}
+    itemsWantedInItemContextState={itemsWantedInItemContextState}
+    updateSearchingForItemsInItemContext={updateSearchingForItemsInItemContext}
     />}
     </>
 )
